@@ -443,3 +443,8 @@ while (dice2 !== 6) {
   console.log(`you rolled a dice2 ${dice2}`);
   if (dice2 === 6) console.log("Loop is about to end...");
 }
+
+// BUG FIXME NOTE IMPORTANT TODO
+//- gjnsfdgjnsfkl
+//# kgnflsdngkl
+//= njkglsjknlk
