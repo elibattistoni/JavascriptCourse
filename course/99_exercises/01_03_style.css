@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  height: 100vh;
+  /* display: flex; */
+  /* display: flex;  divides horizontally the window in two */
+  align-items: center;
+  background: linear-gradient(to top left, #28b487, #7dd56f);
+  text-align: left;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5rem;
+}
+
+h1 {
+  font-size: 40px;
+  width: 100%;
+  padding: 30px;
+  color: white;
+}
+
+.instructions {
+  font-size: 15px;
+}
+
+.calculate {
+  margin-top: 1rem;
+}
+
+.hidden {
+  display: none;
+}

@@ -34,3 +34,25 @@ for (let i = 0; i < btnOpenModal.length; i++) {
 
 btnCloseModal.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
+
+// listen to keyboard events (keyboard events are global events -- "global" because they do not happen on one specific element)
+// listen to the ESC button to close the modal
+// you listen to the whole document
+// there are 3 types of events for the keyboard:
+// key down (fired as soon as we press a key)
+// key press (fired continuously as we keep our finger on a key)
+// key up (when you lift your finger off a key)
+document.addEventListener("keydown", function (e) {
+  // this without anything refers to all the keys
+  //NB the information about which key was pressed will be stored in the event that is going to occurr as soon as any key is pressed
+  // every time this function is called (i.e. every time a key is pressed). JS generates an object
+  // this object contains all the information about the event itself, and we can access this object in the event handler function
+  // this object is the input parameter e of the function
+  // console.log(e);
+  // console.log(e.key);
+  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    // console.log("Escape key was pressed");
+    // I only want to close the modal when the modal is visible: if the modal contains the class hidden, it is not visible, else it is visible
+    closeModal();
+  }
+});

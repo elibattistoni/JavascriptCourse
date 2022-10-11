@@ -10,7 +10,7 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 
 ## 01_Fundamentals
 - coding challenge #1 DONE
-- coding challenge #2 TODO
+- coding challenge #2 DONE
 - coding challenge #3 TODO
 - coding challenge #4 TODO
 
