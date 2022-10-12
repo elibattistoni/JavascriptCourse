@@ -26,11 +26,63 @@ const restaurant = {
       close: 24,
     },
   },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here is your delicious pasta with ${ing1},${ing2},${ing3}`);
+  },
 };
 
-//## SPREAD OPERATOR
+//## SPREAD OPERATOR (expand ana array)
 const arr = [7, 8, 9];
 const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
 console.log(badNewArr);
 const goodNewArray = [1, 2, ...arr];
 console.log(goodNewArray);
+console.log(...goodNewArray); // logs elements indivudually
+console.log(1, 2, 7, 8, 9);
+//NB we can use the spread operator whenever we would otherwise write multiple values separated by commas
+// situation n°1 when we write an array literal like the example above (when we need the elements of an array individually)
+// situation n°2 when we pass multiple arguments into functions (console log example)
+
+const newMenu = [...restaurant.mainMenu, "Ghocchi"];
+console.log(newMenu);
+
+//- the spread operator is similar to deconstructing, because they both allow us to get elements out of arrays
+//- the big difference is that the spread operator does not create new variables, therefore you can use it only when you need to write values separated by commas
+
+//# SPREAD OPERATOR: create shallow copies and merge arrays
+// copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+// join 2 arrays
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu);
+
+// IMPORTANT the spread operator works on all iterables (not just on arrays), i.e. strings, maps, sets (NOT objects!)
+const me = "ElisaBattistoni";
+console.log([...me]);
+const letters = [...me, " ", "B."];
+console.log(letters);
+
+// this is not going to work because a template literal does not expect elements separated by commas
+// console.log(`${...me} B.`);
+
+//#functions
+// const ingredients = [
+//   prompt("Let's make pasta! Ingredient 1"),
+//   prompt("Ingredient 2"),
+//   prompt("Ingredient 3"),
+// ];
+const ingredients = ["a", "b", "c"];
+console.log(ingredients);
+
+// two alternatives but the second one is BEST PRACTICE with ES6
+restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]);
+restaurant.orderPasta(...ingredients);
+
+//# Objects
+const newRestaurant = { ...restaurant, founder: "Giuseppe" }; // this will copy all the properties of the restaurant into this new object, and then we can add anything we want
+// you can also do shallow copies of objects, instead of doint object.assign (like in the previous lecture)
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = "Ristorante Italiano Roma";
+console.log(restaurant.name);
+console.log(restaurantCopy.name);

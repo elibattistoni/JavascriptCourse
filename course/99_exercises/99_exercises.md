@@ -11,7 +11,7 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 ## 01_Fundamentals
 - coding challenge #1 DONE
 - coding challenge #2 DONE
-- coding challenge #3 TODO
+- coding challenge #3 DONE
 - coding challenge #4 TODO
 
 ## 02_Fundamentals
@@ -25,3 +25,9 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 
 ## 07_GuessMyNumber
 - coding challenge #1 DONE
+
+## 09_DataStructures_Operators
+- coding challenge #1 TODO
+- coding challenge #2 TODO
+- coding challenge #3 TODO
+- coding challenge #4 TODO
