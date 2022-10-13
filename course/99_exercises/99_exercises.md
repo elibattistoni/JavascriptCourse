@@ -31,3 +31,4 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 - coding challenge #2 TODO
 - coding challenge #3 TODO
 - coding challenge #4 TODO
+- string methods in practice (another challenge) TODO
