@@ -12,23 +12,23 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 - coding challenge #1 DONE
 - coding challenge #2 DONE
 - coding challenge #3 DONE
-- coding challenge #4 TODO
+- coding challenge #4 DONE
 
 ## 02_Fundamentals
-- coding challenge #1 TODO
-- coding challenge #2 TODO
-- coding challenge #3 TODO
-- coding challenge #4 TODO
+- coding challenge #1 DONE
+- coding challenge #2 DONE
+- coding challenge #3 DONE
+- coding challenge #4 DONE
 
 ## 03_Dev_Skills_SetUp
-- coding challenge #1 TODO
+- coding challenge #1 DONE
 
 ## 07_GuessMyNumber
 - coding challenge #1 DONE
 
 ## 09_DataStructures_Operators
-- coding challenge #1 TODO
-- coding challenge #2 TODO
-- coding challenge #3 TODO
+- coding challenge #1 DONE -- to check
+- coding challenge #2 DONE -- to check
+- coding challenge #3 DONE -- to check
 - coding challenge #4 TODO
 - string methods in practice (another challenge) TODO

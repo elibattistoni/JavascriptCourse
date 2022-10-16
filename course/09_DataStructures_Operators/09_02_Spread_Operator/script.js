@@ -32,7 +32,7 @@ const restaurant = {
   },
 };
 
-//## SPREAD OPERATOR (expand ana array)
+//## SPREAD OPERATOR (expand an array)
 const arr = [7, 8, 9];
 const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
 console.log(badNewArr);
@@ -80,7 +80,8 @@ restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]);
 restaurant.orderPasta(...ingredients);
 
 //# Objects
-const newRestaurant = { ...restaurant, founder: "Giuseppe" }; // this will copy all the properties of the restaurant into this new object, and then we can add anything we want
+const newRestaurant = { ...restaurant, founder: "Giuseppe" }; // this will copy all the properties of the restaurant into this new object,
+// and then we can add anything we want
 // you can also do shallow copies of objects, instead of doint object.assign (like in the previous lecture)
 const restaurantCopy = { ...restaurant };
 restaurantCopy.name = "Ristorante Italiano Roma";

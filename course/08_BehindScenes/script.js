@@ -182,6 +182,25 @@ myAddExpr(1, 2, 3, 4, 5, 6, 7, 8); // look at the console: the arguments keyword
 // is legal for both function expressions and function declarations (but not in functiona rrows)
 // but in modern js there are more updated ways of dealing with multiple arguments
 
+//==============================================================================
+//## Primitives vs. Objects (= Reference Types)
+//==============================================================================
+// https://developer.mozilla.org/en-US/docs/Glossary/Primitive
+/// primitive types and reference types (objects) are stored differently in memory
+/// a primitive (primitive value, primitive data type) is data that is not an object and has no methods or properties.
+/// There are 7 primitive data types:
+/// string
+/// number
+/// bigint
+/// boolean
+/// undefined
+/// symbol
+/// null
+/// All primitives are immutable; that is, they cannot be altered. It is important not to confuse a primitive itself
+/// with a variable assigned a primitive value. The variable may be reassigned to a new value,
+/// but the existing value can not be changed in the ways that objects, arrays, and functions can be altered.
+/// Primitives have no methods but still behave as if they do. When properties are accessed on primitives,
+/// JavaScript auto-boxes the value into a wrapper object and accesses the property on that object instead.
 //---------------------------------------------------------------------------
 //# copies of variables
 //---------------------------------------------------------------------------
