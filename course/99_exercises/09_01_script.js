@@ -46,8 +46,10 @@ const game = {
 //==============================================================================
 
 // task 1
-const players1 = [...game.players[0]];
-const players2 = [...game.players[1]];
+// const players1 = [...game.players[0]];
+// const players2 = [...game.players[1]];
+// best practice
+const [players1, players2] = game.players;
 console.log(players1);
 console.log(players2);
 
@@ -57,7 +59,9 @@ console.log(gk);
 console.log(fieldPlayers);
 
 // task 3
-const allPlayers = [...game.players[0], ...game.players[1]];
+// const allPlayers = [...game.players[0], ...game.players[1]];
+// best practice
+const allPlayers = [...players1, ...players2];
 console.log(allPlayers);
 
 // task 4
@@ -67,6 +71,10 @@ console.log(players1Final);
 // task 5
 // const { team1, x: draw, team2 } = { ...game.odds };
 const { team1, x: draw, team2 } = game.odds;
+// otherwise
+// const {
+//   odds: { team1, x: draw, team2 },
+// } = game;
 console.log(team1);
 console.log(draw);
 console.log(team2);
@@ -88,6 +96,9 @@ switch (game.odds.team2 > game.odds.team1) {
     break;
 }
 console.log(winner);
+//solution
+team1 < team2 && console.log("Team 1 is more likely to win");
+team1 > team2 && console.log("Team 2 is more likely to win");
 
 //==============================================================================
 //# Coding Challenge #2

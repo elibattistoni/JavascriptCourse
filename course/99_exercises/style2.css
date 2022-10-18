@@ -2,18 +2,34 @@
 
 body {
   align-items: center;
-  background: linear-gradient(to top left, #28b487, #7dd56f);
+  background: linear-gradient(to bottom right, #0f3889, #41c1f4);
   text-align: left;
+  height: auto;
+  min-height: 100vh;
   font-family: 'Roboto', sans-serif;
   line-height: 1.5em;
-  margin: 0px
+  color: white;
+  margin: auto
 }
 
 h1 {
   font-size: 40px;
   margin-left: 1em;
-  color: white;
   text-shadow: 2px 2px 4px #000000;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  border-radius: 1em;
+  background: #333 url(https://static.tumblr.com/maopbtg/a5emgtoju/inflicted.png) repeat;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.container.instructions {
+  flex-direction: column;
+  margin: 1em 2em 2em 2em;
+  padding: 2em;
 }
 
 ol {
@@ -21,20 +37,44 @@ ol {
 }
 
 pre {
-  width: 99%;
   overflow: auto;
   padding: 0;
   margin: 0;
 }
 
-.instructions {
-  /* border: 1px solid black; */
-  border-radius: 2em;
-  /* top | right | bottom | left */
-  margin: 1em 2em 2em 2.5em;
-  padding: 2em;
-  background: linear-gradient(to top left, #7dd56f, #28b487);
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-  box-shadow: 0 6px 8px 0 rgba(1, 55, 10, 0.2), 0 6px 20px 0 rgba(1, 55, 10, 0.2);
-  /* box-shadow: 5px 5px 10px rgb(1, 55, 10); */
+.container.textarea {
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  margin: auto;
+  padding: 1.5em
+}
+
+textarea {
+  resize: none;
+  outline: none;
+  width: 100%;
+  background-color: #FFF;
+  color: #222;
+  background-image: url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+  border-radius: 0.5em;
+  padding: 0.5em 2em;
+  font-size: large;
+  line-height: 1.8em;
+}
+
+textarea::placeholder {
+  color: black;
+}
+
+.container:last-of-type {
+  margin-bottom: 2em;
+}
+
+#submitButton {
+  margin-top: 1em;
+  padding: 0.7em 2em;
+  font-size: large;
+  background: linear-gradient(white, #98F5FF);
+  border-radius: 0.5em;
 }

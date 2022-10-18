@@ -74,3 +74,7 @@ console.log(passenger);
 /// higher order function = function that receives another function as an argument, that returns a new function, or both (this is only possible because of first-class functions)
 /// e.g. .addEventListener is a higher order function because ti gets as input another function
 /// the function that is passed in is a "callback function", because the callback function will be called later by the higher order function
+
+//==============================================================================
+//## Functions accepting callback functions
+//==============================================================================
