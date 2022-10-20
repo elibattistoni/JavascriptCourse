@@ -226,3 +226,154 @@ book.call(swiss, ...flightData);
 // (it is set to whatever value we pass into bind)
 // this makes it easier if you have to run the function multiplt times
 // i.e. instead of having to use a call all the time, we can just bind once
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+bookEW(23, "Steven Williams");
+
+//NB in the "call" method, we cann pass multiple arguments besides the "named" this keyword; in the bind method we can do the same:
+// (so that the parameters are set in stone; i.e. the function will always be called with the same argument)
+const bookEW23 = book.bind(eurowings, 23);
+// now the book function only needs a name:
+bookEW23("Steven Williams 2 ");
+bookEW23("Martha Cooper");
+//IMPORTANT what we did above (i.e. specifying a part of the arguments beforehand, it is a common pattern called "partial application")
+// PARTIAL APPLICATION = a part of the arguments of the original function are already applied/set
+
+//# USE CASE N°1 of BIND
+// useful application of the bind method: when we use objects together with event listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+  this.planes++;
+  // add a plane every time this function is called
+  console.log(this.planes);
+};
+
+document.querySelector(".buy").addEventListener("click", lufthansa.buyPlane);
+// it returns NaN because the this keyword is the button element
+//IMPORTANT: we have learned that in an event handler function, the this keyword always points to the element on which that handler is attached to
+// i.e. the this keyword is attached to document.querySelector(".buy")
+document
+  .querySelector(".buy")
+  .addEventListener("click", lufthansa.buyPlane.bind(lufthansa));
+
+//# USE CASE N°2 of BIND
+
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// if you are note interested in the this keyword, you set null
+// the first argument of the bind method is the this keyword
+// it could be any value because nothing will happen with it, but null is the standart to use
+const addVAT = addTax.bind(null, 0.23);
+// this is basically like writing:
+// addVAT = value => value + value * 0.23
+console.log(addVAT(100));
+console.log(addVAT(200));
+//NB the order of the arguments is important!
+//IMPORTANT basically with the addVAT function we are creating a BRAND NEW FUNCTION that is MORE SPECIFIC, based on a general function (the addTax function)
+// it is as if we have returned a new specific function fromthe addTax function
+
+// challenge: do all this with the methdo of returning a function
+
+const addTaxRate = function (rate) {
+  return function (value) {
+    value + value * rate;
+  };
+};
+
+const addVAT2 = addTaxRate(0.23);
+console.log(addTaxRate(100));
+console.log(addTaxRate(200));
+
+//==============================================================================
+//## IMMEDIATELY INVOKED FUNCTION EXPRESSIONS (IIFE)
+//==============================================================================
+// sometimes we need a function that is only executed once and never again,
+// i.e. a function that disappears right after it is called once
+// we need this technique later with the async/await
+
+const runOnce = function () {
+  console.log("This will run ever and ever again");
+};
+runOnce();
+runOnce();
+
+// this is not what we want: we want to execute a function immediately and not even having to save it somewhere
+(function () {
+  console.log("This will run once and never run again");
+})();
+// above we transformed the statement that we had before into an expression (by wrapping the function in the parentheses)
+// and run it by writing the parentheses()
+// with the arrow expression:
+(() => console.log("This arrow function will never run again"))();
+
+// why is it important?
+// functions create scopes, and one scope does not have access to variables from an inner scope
+// i.e. in the global scope here we do not have access to the variables that are defined inside the functions (i.e. defined in the scope of any of these functions)
+// the global scope does not have access to the function's inner scopes,
+// but the funtions inner scope does have access to the global scope
+// we say that:
+//# all data defined inside a scope (e.g. inside a function) is "private" or "incapsulated" inside of that specific function scope
+// (data encapsulation and data privacy are extremely important concepts in programming)
+//NB it is important to hide variables, and scopes are a good tool for doing this
+
+//IMPORTANT in ES6 variables declared with let or const create their own scope inside a block
+{
+  const constIsPrivate = 23;
+  let letIsPrivate = 10;
+  var varIsNotPrivate = 46;
+}
+// console.log(constIsPrivate); // error not defined
+// console.log(letIsPrivate); // error not defined
+console.log(varIsNotPrivate); // no error
+// this is the reason why in modern JavaScript IIFE are not that used anymore
+// because if we want to create a new scope for data privacy, all we need to do is to just create a block like this
+// but IIFE is still useful when you want to run a function once only
+
+//==============================================================================
+//## CLOSURE: an important feature of JavaScript functions
+//==============================================================================
+// we don't create closures manually, like we create new arrays or functions
+// closure happens automatically, we just need to recognize those situations
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`passengerCount: ${passengerCount}`);
+  };
+};
+
+//NB in the function that is returned, the variable that is defined in the outer funciton is updated
+
+const booker = secureBooking();
+// therefore booker will be a function as well
+
+booker();
+booker();
+booker();
+// the booker function was able to increment passengerCount
+// but how is it possible? how can the booker function update the passengerCount variable that
+// is defined in the secureBooking function that actually has already finished executing?
+// i.e. its execution context is no longer on the stack
+// but the inner boker function is still able to access the passengerCount variable that
+// is inside of the booker function (the passengerCount that should no longer exist)
+//NB closure makes a function remember all the variables that existed at the function's birthplace essentially
+// we can imagine the secureBooking function as being the birth place of this booker function
+// and so this booker function remembers everything at its birthplace
+//- closure == any function has always access to the variable environment of the execution context in which the function was created, even after the execution context is gone
+//- therefore, closure is basically this variable environment (VE) attached to the function, exactly as it was ath the time and place the function was created
+//- the booker function closed over its parent scoper or over its parent VE (and this includes all function arguments)
+//- and this attached or closed over variable environment stays with the function forever
+//- thanks to closure, a function does not lose connection to variables that existed at the function's birthplace
+// what ahppens with the execution of the Booker function:
+// the function attempts to increase the passengerCount variable
+// however, this variable is not in the current scope
+// so JS will immediately look into the closure and see if it can find the variable there
+// and it does this even before looking at the scope chain:
+// e.g. if there was a global passengerCount variable set to 10, it would still first use the one in the closure
+// therefore closure has priority over the scope chain
+// and so after running this function, passengerCount becomes 1
