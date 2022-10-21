@@ -35,3 +35,6 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 
 ## 10_Functions
 - coding challenge #1 TODO
+- coding challenge #2 TODO
+
+## 11_Arrays

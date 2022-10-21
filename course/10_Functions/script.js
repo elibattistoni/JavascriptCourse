@@ -365,11 +365,11 @@ booker();
 // we can imagine the secureBooking function as being the birth place of this booker function
 // and so this booker function remembers everything at its birthplace
 //- closure == any function has always access to the variable environment of the execution context in which the function was created, even after the execution context is gone
-//- therefore, closure is basically this variable environment (VE) attached to the function, exactly as it was ath the time and place the function was created
+//- therefore, closure is basically this variable environment (VE) attached to the function, exactly as it was at the time and place the function was created
 //- the booker function closed over its parent scoper or over its parent VE (and this includes all function arguments)
 //- and this attached or closed over variable environment stays with the function forever
 //- thanks to closure, a function does not lose connection to variables that existed at the function's birthplace
-// what ahppens with the execution of the Booker function:
+// what happens with the execution of the Booker function:
 // the function attempts to increase the passengerCount variable
 // however, this variable is not in the current scope
 // so JS will immediately look into the closure and see if it can find the variable there
@@ -377,3 +377,100 @@ booker();
 // e.g. if there was a global passengerCount variable set to 10, it would still first use the one in the closure
 // therefore closure has priority over the scope chain
 // and so after running this function, passengerCount becomes 1
+
+//NB we do not have to manually create closures, JS does it automatically.
+//NB we also cannot access closed over variables: closures are not a tangible thing, they are not an object or somethign that we can access
+//NB we cannote reach into a closure and take variables from it (because closure is just an internal property of a function)
+// we can observe that closure happens because functions magically keep having access to variables that should no longer exist, but we cannot directly access these variables
+// but we can look at this internal property (at the backpack)
+
+console.dir(booker); // only in google chrome you can find [[Scopes]]
+// [[Scopes]] is an internal property which is basically the variable environment of the booker function
+// we can see the Closure coming from secureBooking and inside this you can see the passengerCount (which is equal to 3)
+//NB whenever you see the double brackets [[]] it means that that is an internal property that you cannot access from our code
+
+//==============================================================================
+//## exta CLOSURE example - example 1
+//==============================================================================
+//- we don't need to return a function from another function in order to create a closure
+
+let f;
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+g();
+f();
+console.dir(f);
+// the f function closes over any variables of the execution context in which it was defined
+// and this is true even when the variable itslef (f) was technically not even defined inside of this variable environment (inside the outer function)
+// this f was defined outside, in the global scope; but when we assigned it a function inside the g function,
+// it closed over the VE of the g function, and that includes the "a" variable, and therefore it is able to access this variable even after the g function
+// has finished its execution
+
+//# reassigning the f function/variable
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 7);
+  };
+};
+
+h();
+f();
+// the reassignment of the f function closes over the variable environment of h
+console.dir(f);
+
+//==============================================================================
+//## exta CLOSURE example - example 2
+//==============================================================================
+// timer ---> timer is another good example that we don't need to return a function to see a closure in action
+const boardPassengers = function (numPassengers, waitTime) {
+  const perGroup = numPassengers / 3; // 3 groups
+
+  //setTimeout is a built-in JS callback function that needs 2 parameters
+  // 1: a function that will be executed
+  // 2: time after which the function will be executed
+  const timeout = waitTime * 1000; // 1000 milliseconds = 1 second
+  setTimeout(() => {
+    console.log(`We are now boarding all ${numPassengers} passengers.`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers.`);
+  }, timeout);
+
+  console.log(`Will start boarding in ${waitTime} seconds...`);
+};
+
+boardPassengers(180, 3);
+// setTimeout(() => {
+//   console.log("THIS IS MY FREAKING TIMER");
+// }, 1000);
+
+//NB the callback function setTimeout() inside boardPassengers() was executed completely independently from the boardPassengers() function
+//NB but it was still able to use all the variables that were inside the variable environment in which it was created
+//NB the only way in which the setTimeout() callback function can have access to the variables that are defined in the boardPassengers() function (that has long finished its execution) is if it created a closure
+
+// let's prove that closure has priority over the scope chain
+const perGroup = 1000;
+boardPassengers(180, 3);
+// if the scope chain had priority over closure, then the setTimeout() function would use this perGroup variable equal to 1000
+// but this is not the case
+
+
+//==============================================================================
+//## Franco snippet for function documentation
+//==============================================================================
+/**
+ * @description ciao elisa
+ * @param {number} var1
+ * @param {any} car2
+ * @param {object} asg4
+ * @returns ciao
+ */
+function ciaoElisa(var1, car2, asg4) {
+  return 1;
+}
+
+ciaoElisa();
