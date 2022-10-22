@@ -140,3 +140,131 @@ currencySet.forEach(function (value, key, set) {
   console.log(`key: ${key} - value: ${value} - set ${set}`);
 });
 //NB key and value, in the forEach for sets, are equal
+
+//==============================================================================
+//## Data transformation: map, filter, reduce
+//==============================================================================
+// in JS there are 3 important methods for data transformation
+// we use these methods to create new arrays based on transforming data from other arrays
+
+//## MAP --> another method for looping over arrays
+//NB similar to the forEach method, but the big difference is that map creates a brand new array based on the original array
+// it maps the values of the original array to a new array
+
+//## FILTER
+// it filters elements that satisfy a certain condition (creates a new array)
+
+//## REDUCE
+// boil down all the elements of the original array into one single value
+// e.g. add all the elements of an array together (we need to specify an operation in which we have an accumulator variable, and it keeps adding elements to the accumulator)
+// it is the final value that gets returned from the reduce method in the end
+
+//==============================================================================
+//## .map() method
+//==============================================================================
+// convert to dollars
+
+const movementsEur = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const eurToUsd = 1.1;
+const movementsUsd = movementsEur.map(function (value) {
+  return value * eurToUsd;
+});
+
+console.log(movementsEur);
+console.log(movementsUsd);
+
+// the alternative to .map() is that you loop over the old array and push, on each iteration,
+// an element to the new array
+const movementsUSDfor = [];
+for (const mov of movementsEur) {
+  movementsUSDfor.push(mov * eurToUsd);
+}
+console.log(movementsUSDfor);
+
+//best practice the map method is more in line with functional programming
+
+//IMPORTANT use map with arrow function when possible
+
+const movUSDarrow = movementsEur.map((mov) => mov * eurToUsd);
+console.log(movUSDarrow);
+
+// the argument can be (mov, i, arr)
+const movementsDescription = movementsEur.map(
+  (mov, i) => `You ${mov > 0 ? "deposited" : "withdrew"} ${Math.abs(mov)}`
+);
+
+console.log(movementsDescription);
+
+//==============================================================================
+//## .filter() method
+//==============================================================================
+//
+
+const newMovements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// (mov, i, arr)
+const deposits = newMovements.filter(function (mov) {
+  return mov > 0;
+});
+console.log(newMovements);
+console.log(deposits);
+
+// with forof
+const deposits2 = [];
+for (const mov of newMovements) {
+  if (mov > 0) {
+    deposits2.push(mov);
+  }
+}
+console.log(deposits2);
+
+// negative
+const withdrawals = newMovements.filter((mov) => mov < 0);
+console.log(withdrawals);
+
+//==============================================================================
+//## .reduce() method
+//==============================================================================
+
+const balance = newMovements.reduce(function (
+  accumulator,
+  currElement,
+  index,
+  array
+) {
+  console.log(`iteration number ${index}: ${accumulator}`);
+  return accumulator + currElement;
+},
+0);
+// this 0 is the initial value of the accumulator, before starting the lop
+console.log(balance);
+
+//NB with arrow function
+const balanceArrow = newMovements.reduce((acc, el) => acc + el, 0);
+console.log(balanceArrow);
+
+//IMPORTANT other things with .reduce()
+//# MAXIMUM VALUE
+console.log(newMovements);
+const max = newMovements.reduce((acc, mov) => {
+  acc > mov ? acc : mov;
+}, newMovements[0]);
+console.log(max);
+
+const max2 = newMovements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, newMovements[0]);
+console.log(max2);
+
+//==============================================================================
+//## .Chaining methods: pipelines
+//==============================================================================
+console.log(newMovements);
+const totalDepostiUSD = newMovements
+  .filter((mov) => mov > 0)
+  .map((mov) => mov * eurToUsd) //IMPORTANT remember that to degub, you have access to the array returned from the previous method
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepostiUSD);
+
+//IMPORTANT in JS is bad practice tochain methods that mutate the underlying original array, i.e. methods that do not create a new array
+// e.g. do not chain methods like splice and reverse
