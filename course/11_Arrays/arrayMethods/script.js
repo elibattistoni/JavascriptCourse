@@ -268,3 +268,21 @@ console.log(totalDepostiUSD);
 
 //IMPORTANT in JS is bad practice tochain methods that mutate the underlying original array, i.e. methods that do not create a new array
 // e.g. do not chain methods like splice and reverse
+
+//==============================================================================
+//## .Find method
+//==============================================================================
+// find() accepts a callback function that will be executed as the method loops over the array
+// but it does something different: it retrieves an element of the array
+// the callback function should return a boolean
+// the find method does not return an array (unline the filter method)
+//NB it returns only the first element of the array that satisfies the condition
+const firstWithdrawal = newMovements.find((mov) => mov < 0);
+console.log(newMovements);
+console.log(firstWithdrawal);
+
+// the find method is similar to the filter method
+// 1) the filter mthod returns all the elements that satisfy a condition; the find element returns only the first one
+// 2) the filter method returns a new array; the find method returns only the element itself (not an array)
+
+//NB since the goal of the find method is to just find exactly one element, we usually set up a condition where only one element can satisfy that condition

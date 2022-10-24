@@ -94,7 +94,7 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements); // LECTURE, COMMENTED FOR APP!!
 
 //==============================================================================
 //## Calculate and display balance
@@ -105,7 +105,7 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `${balance}€`;
 };
 
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements); // LECTURE, COMMENTED FOR APP!!
 
 //==============================================================================
 //## Calculate and display summary
@@ -129,7 +129,26 @@ const calcDisplaySummary = function (movements) {
   labelSumInterest.textContent = `${summaryInterest}€`;
 };
 
-console.log(calcDisplaySummary(account1.movements));
+// console.log(calcDisplaySummary(account1.movements)); // LECTURE, COMMENTED FOR APP!!
+
+const calcDisplaySummary2 = function (account) {
+  const summaryDeposit = account.movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${summaryDeposit}€`;
+
+  const summaryWithdrawals = account.movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(summaryWithdrawals)}€`;
+
+  const summaryInterest = account.movements
+    .filter((mov) => mov > 0)
+    .map((deposit) => (deposit * account.interestRate) / 100)
+    .filter((int) => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${summaryInterest}€`;
+};
 
 //==============================================================================
 //## Computing Usernames
@@ -167,3 +186,51 @@ const createUsernameB = function (accs) {
 };
 createUsernameB(accounts);
 console.log(accounts);
+
+//==============================================================================
+//## Return the account that matches a condition
+//==============================================================================
+// find an object in an array of objects based on some property
+console.log("------- Return account that matches a condition -------");
+console.log(accounts);
+
+const account = accounts.find((acc) => acc.owner === "Jessica Davis");
+console.log(account);
+
+//==============================================================================
+//## Login functionality
+//==============================================================================
+let currentAccount;
+btnLogin.addEventListener("click", function (e) {
+  e.preventDefault(); // this prevents the form from submitting
+
+  currentAccount = accounts.find(
+    (acc) => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // ?.pin read the pin property only if the currentAccount exists
+
+    // display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(" ")[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // display movements
+    displayMovements(currentAccount.movements);
+
+    // display balance
+    calcDisplayBalance(currentAccount.movements);
+
+    // display summary
+    calcDisplaySummary2(currentAccount);
+
+    // Clear input fields: the form buttons: remove focus and empty form
+    inputLoginUsername.value = inputLoginPin.value = "";
+    inputLoginPin.blur(); // remove focus and blinking bar
+  }
+});
+//NB the button in a form element: the default behavior in HTML when we click a Submit button, is for the page to reload
+// we need to stop that from happening using .preventDefault()
+//NB another cool feature of HTML forms is that when you hit enter, it automatically triggers a click event on the submit button
