@@ -286,3 +286,7 @@ console.log(firstWithdrawal);
 // 2) the filter method returns a new array; the find method returns only the element itself (not an array)
 
 //NB since the goal of the find method is to just find exactly one element, we usually set up a condition where only one element can satisfy that condition
+
+//==============================================================================
+//## .Some and every methods
+//==============================================================================

@@ -107,6 +107,11 @@ const calcDisplayBalance = function (movements) {
 
 // calcDisplayBalance(account1.movements); // LECTURE, COMMENTED FOR APP!!
 
+const calcDisplayBalance2 = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+
+  labelBalance.textContent = `${acc.balance}€`;
+};
 //==============================================================================
 //## Calculate and display summary
 //==============================================================================
@@ -200,6 +205,16 @@ console.log(account);
 //==============================================================================
 //## Login functionality
 //==============================================================================
+
+const updateUI = function (currentAccount) {
+  // display movements
+  displayMovements(currentAccount.movements);
+  // display balance
+  calcDisplayBalance2(currentAccount);
+  // display summary
+  calcDisplaySummary2(currentAccount);
+};
+
 let currentAccount;
 btnLogin.addEventListener("click", function (e) {
   e.preventDefault(); // this prevents the form from submitting
@@ -217,14 +232,7 @@ btnLogin.addEventListener("click", function (e) {
     }`;
     containerApp.style.opacity = 100;
 
-    // display movements
-    displayMovements(currentAccount.movements);
-
-    // display balance
-    calcDisplayBalance(currentAccount.movements);
-
-    // display summary
-    calcDisplaySummary2(currentAccount);
+    updateUI(currentAccount);
 
     // Clear input fields: the form buttons: remove focus and empty form
     inputLoginUsername.value = inputLoginPin.value = "";
@@ -234,3 +242,64 @@ btnLogin.addEventListener("click", function (e) {
 //NB the button in a form element: the default behavior in HTML when we click a Submit button, is for the page to reload
 // we need to stop that from happening using .preventDefault()
 //NB another cool feature of HTML forms is that when you hit enter, it automatically triggers a click event on the submit button
+
+//==============================================================================
+//## Implementing transfers from noe user to another
+//==============================================================================
+btnTransfer.addEventListener("click", function (e) {
+  //prevent default behavior
+  e.preventDefault();
+
+  // get info from form
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    (acc) => acc.username === inputTransferTo.value
+  );
+  // clear fields
+  inputTransferAmount.value = inputTransferTo.value = "";
+  inputTransferAmount.blur();
+  inputTransferTo.blur();
+
+  // reveiverAcc?. if the receiver account exists
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // do the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // update UI
+    updateUI(currentAccount);
+  }
+});
+
+//==============================================================================
+//## .Closing an account (the findIndex method)
+//==============================================================================
+btnClose.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  // check credentials (if user is correct and pin is correct)
+  if (
+    Number(inputClosePin.value) === currentAccount.pin &&
+    inputCloseUsername.value === currentAccount.username
+  ) {
+    console.log("Close account -- correct credentials");
+    const index = accounts.findIndex(
+      (acc) => acc.username === currentAccount.username
+    );
+    // delete account
+    accounts.splice(index, 1);
+
+    // hide ui
+    containerApp.style.opacity = 0;
+  }
+
+  // clear fields
+  inputClosePin.value = inputCloseUsername.value = "";
+  inputClosePin.blur();
+  inputCloseUsername.blur();
+});

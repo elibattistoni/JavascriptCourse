@@ -72,7 +72,7 @@ console.log(passenger);
 //==============================================================================
 /// first class functions === all functions are values
 /// higher order function = function that receives another function as an argument, that returns a new function, or both (this is only possible because of first-class functions)
-/// e.g. .addEventListener is a higher order function because ti gets as input another function
+/// e.g. .addEventListener is a higher order function because it gets as input another function
 /// the function that is passed in is a "callback function", because the callback function will be called later by the higher order function
 
 //==============================================================================
@@ -173,7 +173,8 @@ const eurowings = {
 };
 
 const book = lufthansa.book;
-// like this it is a regular function call (not a method) therefore if you call it you will get an error because the this keyword points to undefined (in strict mode)
+// like this it is a regular function call (not a method) therefore if you call it
+// you will get an error because the this keyword points to undefined (in strict mode)
 // book(23, "Sarah");
 
 lufthansa.book(111, "Cristina Pedroncelli");
@@ -222,7 +223,8 @@ book.call(swiss, ...flightData);
 //#::::::::::::::::
 //= BIND
 //#::::::::::::::::
-// bind does not immediately call the function: it returns a new function where the this keyword is bound (where the this keyword is set to the input of bind)
+// bind does not immediately call the function: it returns a new function where the this keyword is bound
+// (where the this keyword is set to the input of bind)
 // (it is set to whatever value we pass into bind)
 // this makes it easier if you have to run the function multiplt times
 // i.e. instead of having to use a call all the time, we can just bind once
@@ -231,7 +233,7 @@ const bookLH = book.bind(lufthansa);
 const bookLX = book.bind(swiss);
 bookEW(23, "Steven Williams");
 
-//NB in the "call" method, we cann pass multiple arguments besides the "named" this keyword; in the bind method we can do the same:
+//NB in the "call" method, we can pass multiple arguments besides the "named" this keyword; in the bind method we can do the same:
 // (so that the parameters are set in stone; i.e. the function will always be called with the same argument)
 const bookEW23 = book.bind(eurowings, 23);
 // now the book function only needs a name:
@@ -457,7 +459,6 @@ const perGroup = 1000;
 boardPassengers(180, 3);
 // if the scope chain had priority over closure, then the setTimeout() function would use this perGroup variable equal to 1000
 // but this is not the case
-
 
 //==============================================================================
 //## Franco snippet for function documentation
