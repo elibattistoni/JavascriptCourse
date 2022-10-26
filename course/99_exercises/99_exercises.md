@@ -34,8 +34,8 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 - string methods in practice (another challenge) TODO
 
 ## 10_Functions
-- coding challenge #1 DONE -- to check
-- coding challenge #2 TODO
+- coding challenge #1 DONE
+- coding challenge #2 DONE
 
 ## 11_Arrays
 - coding challenge #1 TODO

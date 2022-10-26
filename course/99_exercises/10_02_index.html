@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="style2.css" />
+
+    <title>Coding Challenge #2</title>
+  </head>
+
+  <body>
+    <h1>Coding Challenge #2 (10_Functions)</h1>
+    <div class="container instructions">
+      <p>This is more of a thinking challenge than a coding challenge</p>
+      <p>Your tasks:</p>
+      <ol>
+        <li>
+          Take the IIFE below and at the end of the function, attach an event
+          listener that changes the color of the selected h1 element ('header')
+          to blue, each time the body element is clicked. Do not select the h1
+          element again!
+        </li>
+        <li>
+          And now explain to yourself (or someone around you) why this worked!
+          Take all the time you need. Think about when exactly the callback
+          function is executed, and what that means for the variables involved
+          in this example.
+        </li>
+      </ol>
+      <pre><code>
+        (function () {
+          const header = document.querySelector('h1');
+          header.style.color = 'red';
+        })();
+      </code></pre>
+    </div>
+  </body>
+
+  <script src="10_02_script.js"></script>
+</html>

@@ -17,9 +17,23 @@ const poll = {
       prompt(`${this.question}\n${this.options.join("\n")}`)
     );
     // update answers array
-    if (typeof response === "number" && response >= 0 && response <= 3) {
+    if (
+      typeof response === "number" &&
+      response >= 0 &&
+      response <= this.answers.length
+    ) {
       this.answers[response] += 1;
+      // this.answers[response] ++;
     }
+    //NB you could also use short circuiting
+    // typeof response === "number" &&
+    //   response >= 0 &&
+    //   response <= this.answers.length &&
+    //   this.answers[response]++;
+
+    //NB teacher solution
+    // this.displayResults();
+    // this.displayResults("string");
   },
 
   displayResults: function (type = "array") {
@@ -30,6 +44,7 @@ const poll = {
 };
 
 // you need to tell js what is the this object: do this with the bind method
+//NB in an event handler function, the this keyword will always point to the element that it is attached (i.e. to the button in this case)
 btnPoll.addEventListener("click", poll.registerNewAnswer.bind(poll));
 btnPoll.addEventListener("click", poll.displayResults.bind(poll, "string"));
 
