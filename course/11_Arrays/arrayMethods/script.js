@@ -290,3 +290,129 @@ console.log(firstWithdrawal);
 //==============================================================================
 //## .Some and every methods
 //==============================================================================
+console.log(newMovements);
+console.log(newMovements.includes(-130)); //NB this checks only for equality
+//- TEST FOR CONDITION
+// is there any positive movement in the array?
+// if there is any (some) value that passes the conditional test, then it will return true
+let anyDeposit = newMovements.some((mov) => mov > 0);
+console.log(anyDeposit);
+anyDeposit = newMovements.some((mov) => mov > 5000);
+console.log(anyDeposit);
+
+// if every element passes the condition, it returns true
+console.log(movements.every((mov) => mov > 0));
+// console.log(account4.movements.every((mov) => mov > 0));
+
+//NB so far we have always written out callback function as an argument into our array methods
+//NB but we could write this function separately and then pass the function as a callback
+// separate callback
+
+const deposit = (mov) => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+
+//==============================================================================
+//## flat and flatMap
+//==============================================================================
+const arrx = [[1, 2, 3], [4, 5, 6], 7, 8, 9];
+// transform into full array from 1 to 9
+console.log(arrx.flat());
+console.log(arrx);
+//NB .flat() goes only one level deep
+
+const arrDeep = [[1, [2, 3, 4]], [5, [6, [7, 8], 9]], 10];
+console.log(arrDeep.flat(2)); // 2 levels deep
+console.log(arrDeep.flat(3)); // 3 levels deep
+// console.log(arrDeep.flatMap());
+
+const account1 = {
+  owner: "Jonas Schmedtmann",
+  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  interestRate: 1.2, // %
+  pin: 1111,
+};
+
+const account2 = {
+  owner: "Jessica Davis",
+  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  interestRate: 1.5,
+  pin: 2222,
+};
+
+const account3 = {
+  owner: "Steven Thomas Williams",
+  movements: [200, -200, 340, -300, -20, 50, 400, -460],
+  interestRate: 0.7,
+  pin: 3333,
+};
+
+const account4 = {
+  owner: "Sarah Smith",
+  movements: [430, 1000, 700, 50, 90],
+  interestRate: 1,
+  pin: 4444,
+};
+
+const accounts = [account1, account2, account3, account4];
+
+//## OPTION 1
+// take out all the movements from the accounts
+const accountMovements = accounts.map((acc) => acc.movements);
+console.log(accountMovements);
+
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+//## OPTION 2
+const overallBalanceX = accounts
+  .map((acc) => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalanceX);
+
+//NB unsing a map first and then flattening the result is a pretty common operation
+const overallBalanceY = accounts.flatMap((acc) => acc.movements);
+console.log(overallBalanceY);
+// NB flatMap goes only 1 level deep, therefore if you need to go deeper than one level,
+//NB you still need the simple map method
+
+//==============================================================================
+//## sorting arrays
+//==============================================================================
+/// sort is based on strings!
+const owners = ["Jonas", "Zach", "Adam", "Martha"];
+console.log(owners);
+owners.sort();
+console.log(owners);
+//NB careful because it sorts inplace
+
+console.log(movements);
+console.log(movements.sort()); // NB these are not sorted at all
+// NB it converts everything to strings and it does the sorting
+
+/// to sort by numbers you pass in a callback function to the sort method
+// if return < 0, thus A then B (keep order)
+// if return > 0, thus B then A (switch order)
+movements.sort((currvalue, nextvalue) => {
+  if (currvalue > nextvalue) {
+    return 1; /// if you want descending order, here must be -1
+  }
+  if (nextvalue > currvalue) {
+    return -1; /// if you want descending order, here must be 1
+  }
+});
+console.log(movements);
+// NOTE the sort method keeps looping over the array and applying
+//~ the callback function in input until everything is in an ascending order
+//~ according to the rules that we established
+
+/// in fact, you can simplify the sort method for numbers drastically (just think about it)
+movements.sort((a, b) => a - b);
+console.log(`ascending: ${movements}`);
+movements.sort((a, b) => b - a);
+console.log(`descending: ${movements}`);

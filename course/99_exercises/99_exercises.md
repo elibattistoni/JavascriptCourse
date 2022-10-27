@@ -38,7 +38,7 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 - coding challenge #2 DONE
 
 ## 11_Arrays
-- coding challenge #1 TODO
-- coding challenge #2 TODO
+- coding challenge #1 DONE -- to check
+- coding challenge #2 DONE -- to check
 - coding challenge #3 TODO
 - coding challenge #4 TODO
