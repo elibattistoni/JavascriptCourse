@@ -36,6 +36,7 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 ## 10_Functions
 - coding challenge #1 DONE
 - coding challenge #2 DONE
+- important: not done one last video lesson with array exercises TODO
 
 ## 11_Arrays
 - coding challenge #1 DONE -- to check

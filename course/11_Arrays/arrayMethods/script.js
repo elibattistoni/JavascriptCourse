@@ -416,3 +416,24 @@ movements.sort((a, b) => a - b);
 console.log(`ascending: ${movements}`);
 movements.sort((a, b) => b - a);
 console.log(`descending: ${movements}`);
+
+//==============================================================================
+//## programmatically create and fill arrays
+//==============================================================================
+
+const x = new Array(7); // when there is 1 argument, it indicates the length (it will create an empty array of 7 elements)
+console.log(x);
+
+//## the fill method
+x.fill(1); // fill everything with 1
+console.log(x);
+
+//NB you can also specify the begin parameter, and an end parameter
+x.fill(2, 3, 5); // fill with 2 from the index (you could also stop here) and specify also an end parameter idx 5 (the final idx not included)
+console.log(x);
+
+// best practice recreate an array programmatically
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+// NB in the banklist project there is a more practical example of Array.from()

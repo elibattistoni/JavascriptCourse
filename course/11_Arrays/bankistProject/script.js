@@ -64,14 +64,20 @@ const inputClosePin = document.querySelector(".form__input--pin");
 //==============================================================================
 //## Display movements
 //==============================================================================
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   //## Empty the entire container before adding stuff
   containerMovements.innerHTML = ""; // textContent returns only the text inside an element; innerHTML returns also the HTML of that element
   // console.log(containerMovements.textContent);
   // console.log(containerMovements.innerHTML);
 
+  //## Sort the movements
+  // with .slice() you can create a copy of an array when you have to chain methods
+  const sortedMovements = sort
+    ? movements.slice().sort((a, b) => a - b)
+    : movements;
+
   //## Add one html element per bank movement
-  movements.forEach(function (mov, i) {
+  sortedMovements.forEach(function (mov, i) {
     //## Define what you want to insert in the HTML
     const type = mov > 0 ? "deposit" : "withdrawal";
     // template literals are amazing for creating multiline HTML templates
@@ -323,3 +329,57 @@ btnClose.addEventListener("click", function (e) {
   inputClosePin.blur();
   inputCloseUsername.blur();
 });
+
+//==============================================================================
+//## Sorting movements functionality
+//==============================================================================
+// btnSort.addEventListener("click", function (e) {
+//   e.preventDefault();
+//   displayMovements(currentAccount.movements, true);
+// });
+//NB in this case when you click the sort button, it sorts the movements, but if you click it again nothing happens
+// how to solve this?
+//~ we will use a STATE VARIABLE which will monitor if we are currently sorting the movements or not
+//~ this state variable needs to live outside the callback function for the addeventlistener on the btnsort element
+let sorted = false; // because at the beginning the array is not sorted
+// and if here it is false, inside the callback function it should be the opposite, i.e. true
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted); //! returns the opposite
+  sorted = !sorted;
+});
+// if it is already sorted (true), then we want it back to its original state, i.e. false
+
+//==============================================================================
+//## Getting an array of elements
+//==============================================================================
+// IMPORTANT
+// this is for getting the movements only if you are logged in and you hover over the balance
+
+labelBalance.addEventListener("mouseover", function () {
+  // const movementsUI = Array.from(
+  //   document.querySelectorAll(".movements__value")
+  // );
+  // const values = movementsUI.map((el) => el.textContent.replace("€", ""));
+
+  //~ the Array.from() method has the second argument a mapping callback
+  // so the code above can be merged into:
+  const movementsUI = Array.from(
+    document.querySelectorAll(".movements__value"),
+    (el) => el.textContent.replace("€", "")
+  );
+  console.log(movementsUI);
+  //NB the .map method will not work if you do not do Array.from()
+  // i.e. it will not work if you call it directly on document.querySelectorAll(".movements__value")
+  //NB document.querySelectorAll(".movements__value") is a NodeList i.e. an array like structure
+  // and this array like structure can be easily converted into an array with Array.from()
+
+  // another way of creating an array from a NodeList is
+  const movementsUI2 = [...document.querySelectorAll(".movements__value")];
+  // but then you have to do the mapping separately
+  console.log(movementsUI2);
+});
+
+//==============================================================================
+//## TODO "Array methods in practice" (more exercises) -- skipped for now
+//==============================================================================
