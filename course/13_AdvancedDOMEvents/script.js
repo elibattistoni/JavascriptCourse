@@ -457,3 +457,53 @@ const slider = function () {
 // then call it like this
 slider();
 */
+
+//==============================================================================
+//## LIFE CYCLE DOM EVENTS
+//==============================================================================
+// let's look at some events that occurr in the DOM during a webpage life cycle
+// life cycle = from the moment the page is first accessed until the user leaves it
+
+/// EVENT 1: DOM CONTENT LOADED
+// this event is fired by the document as soon as the HTML is completely parsed
+// (the HTML is parsed when it has been downloaded and converted to the DOM tree)
+// in addition all the scripts must be downloaded and executed  before the "DOM content loaded event" can happen
+// we can listen to this event; since it happens on the document, we call the add event listener to the document
+// remember that this event does not wait for images and other external resources to load (NB only HTML and Javascript need to be loaded)
+document.addEventListener("DOMContentLoaded", function (e) {
+  console.log("HTML parsed and DOM tree built!");
+  console.log(e);
+});
+
+//~ we want all our code to be executed ONLY AFTER THE DOM IS READY
+// but we do not need to wrap all our code into that callback function above
+// because we have the script tag that imports our JS code into the HTML at the end of the body
+// i.e. it is the last thing that is going to be read into our HTML
+// the browser will only find our script when the rest of the HTML is already parsed
+//~ when we have the script tag at the end of the HTML, we do not need to listen for the DOM content loaded event
+
+/// EVENT 2: LOAD EVENT
+// the load event is fired by the window as soon as the HTML, images and external resources (e.g. CSS files) are loaded
+// i.e. when the complete page has finished loading
+window.addEventListener("load", function (e) {
+  console.log("PAGE FULLY LOADED");
+  console.log(e);
+});
+
+/// EVENT 3: BEFORE UNLOAD EVENT
+// it is fired by the window
+// this event is created immediately before a user is about to leave the page
+// we could use this event to ask the users if they are 100% sure they want to leave the page
+// window.addEventListener("beforeunload", function (e) {
+//   e.preventDefault(); // required for some browsers but not for chrome
+//   console.log("BEFORE UNLOAD");
+//   console.log(e);
+
+//   // in order to display a leaving confirmation, we need to set the return value on the event to an empty string
+//   e.returnValue = ""; //NB you cannot change the pop up
+// });
+
+//==============================================================================
+//## EFFICIENT SCRIPT LOADING: DEFER AND ASYNC
+//==============================================================================
+// there are different ways fo loading JavaScript scripts into HTML
