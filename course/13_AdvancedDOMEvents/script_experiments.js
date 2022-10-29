@@ -393,6 +393,50 @@ console.log(h1.parentElement.children);
 });
 
 //==============================================================================
+//## Implement sticky navigation bar (NB the OLD WAY!)
+//==============================================================================
+//TODO uncomment to see this work but if you do, then comment the code of the sticky navigation bar using the intersection observer API
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
+
+// //NB actually "scroll" is bad practice because it fires continuously
+// window.addEventListener("scroll", function () {
+//   // console.log(window.scrollY);
+//   // when we reach the first section, the navigation bar should become sticky
+//   if (window.scrollY > initialCoords.top) {
+//     nav.classList.add("sticky");
+//   } else {
+//     nav.classList.remove("sticky");
+//   }
+// });
+
+//==============================================================================
+//## Implement sticky navigation bar with the new INTERSECTION OBSERVER API
+//==============================================================================
+// this API allows our code to observe changes to the way a certain target element intersects another element or the viewport
+
+/// this callback function is called each time the target element (i.e. the observed element, i.e. section1) is intersecting the root element (i.e. the viewport) at the define threshold
+// called regardless of whether you are scrolling up or down
+const observerCallback = function (entries, observer) {
+  // entries is an array of threshold values
+  entries.forEach((entry) => console.log(entry)); /// important: intersectionRatio and isIntersecting
+};
+
+const observerOptions = {
+  root: null, // root is the element that the target is intersecting: section1 is the target; null is the viewport
+  // threshold: 0.1, // threshold is the percentage of intersection at which the observer callback will be called (0.1 is equal to 10%); you can have a single value or an array
+  threshold: [0, 0.2], // 0% means that the callback function will be called each time the target element moves completely out of view; and also as soon as it enters the view
+  // because the callback function is called when the threshold is passed when moving into the view and when moving out of the view
+  // if we wrote [0, 1] this means that the callback function will be called when 100% of the target is visible in the viewport (this is impossible because the section itself is already bigger than the viewport)
+  // 0.2 means that the callback fun is triggered when 20% of the target moves into the viewport
+};
+
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+// now let's use this observer to observe a certain target
+observer.observe(section1);
+
+//==============================================================================
 //##
 //==============================================================================
 // bene o male

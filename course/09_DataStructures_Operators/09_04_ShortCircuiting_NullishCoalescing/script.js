@@ -1,8 +1,4 @@
 "use strict";
-//## REST PATTERN & REST PARAMETERS
-// Data needed for a later exercise
-const flights =
-  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
 
 // Data needed for first part of the section
 const restaurant = {
@@ -48,7 +44,7 @@ console.log(true || 0);
 console.log(undefined || null); // it returns null even if null is a falsy value
 console.log(undefined || 0 || "" || "Hello" || 23 || null);
 
-// BEST PRACTICE do not do these things with if else statements but witht these operators!
+// BEST PRACTICE do not do these things with if else statements but with these operators!
 // to assign a default value if a preoperty of an object does not exist:
 //  uncomment to set the property and see how the short circuit evaluation behaves
 // restaurant.numGuests = 23;

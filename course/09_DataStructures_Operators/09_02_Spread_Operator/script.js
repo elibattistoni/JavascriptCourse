@@ -1,9 +1,5 @@
 "use strict";
 
-// Data needed for a later exercise
-const flights =
-  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
-
 // Data needed for first part of the section
 const restaurant = {
   name: "Classico Italiano",
@@ -40,7 +36,7 @@ const goodNewArray = [1, 2, ...arr];
 console.log(goodNewArray);
 console.log(...goodNewArray); // logs elements indivudually
 console.log(1, 2, 7, 8, 9);
-//NB we can use the spread operator whenever we would otherwise write multiple values separated by commas
+//- we can use the spread operator whenever we would otherwise write multiple values separated by commas
 // situation n°1 when we write an array literal like the example above (when we need the elements of an array individually)
 // situation n°2 when we pass multiple arguments into functions (console log example)
 
@@ -66,7 +62,7 @@ console.log(letters);
 // this is not going to work because a template literal does not expect elements separated by commas
 // console.log(`${...me} B.`);
 
-//#functions
+//# function inputs
 // const ingredients = [
 //   prompt("Let's make pasta! Ingredient 1"),
 //   prompt("Ingredient 2"),
@@ -82,7 +78,7 @@ restaurant.orderPasta(...ingredients);
 //# Objects
 const newRestaurant = { ...restaurant, founder: "Giuseppe" }; // this will copy all the properties of the restaurant into this new object,
 // and then we can add anything we want
-// you can also do shallow copies of objects, instead of doint object.assign (like in the previous lecture)
+/// you can also do shallow copies of objects, instead of doint object.assign (like in the previous lecture)
 const restaurantCopy = { ...restaurant };
 restaurantCopy.name = "Ristorante Italiano Roma";
 console.log(restaurant.name);

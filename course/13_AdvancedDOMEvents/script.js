@@ -99,7 +99,7 @@ tabsContainer.addEventListener("click", function (e) {
 //## Passing arguments to Event Handlers: fade out all the links whyen we hover on one of them, except for the link that we actually hover over
 
 const handleHover = function (e, opacity) {
-  console.log(this); // this is for understading better when you use bind
+  // console.log(this); // this is for understading better when you use bind
   if (e.target.classList.contains("nav__link")) {
     const link = e.target;
     // let's look for a parent that matches a certain query
@@ -138,18 +138,322 @@ nav.addEventListener("mouseover", handleHover.bind(0.5)); // NB the bind method 
 nav.addEventListener("mouseout", handleHover.bind(1));
 
 //==============================================================================
-//## Implement sticky navigation bar
+//## Implement sticky navigation bar with the new INTERSECTION OBSERVER API
 //==============================================================================
-const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords);
+// this API allows our code to observe changes to the way a certain target element intersects another element or the viewport
 
-//NB actually "scroll" is bad practice because it fires continuously
-window.addEventListener("scroll", function () {
-  // console.log(window.scrollY);
-  // when we reach the first section, the navigation bar should become sticky
-  if (window.scrollY > initialCoords.top) {
+// when do we want our navigation bar to become sticky? when the header moves completely out of view
+const header = document.querySelector(".header ");
+const navHeight = nav.getBoundingClientRect().height;
+
+// define the options
+const headerObsOpt = {
+  root: null, // root is the element that the target is intersecting: section1 is the target; null is the viewport
+  threshold: 0, // when the 0% of the header is visible (ie.e when the header is completely not visible in the viewport) we want something to happen
+  rootMargin: `-${navHeight}px`, // the root margin is a box (in this case of 90px) that will be applied outside of our target element (ie.e header)
+  // it is as if for this functionality, you want the header to stop at this bottom - 90 px (i.e. it is as if the header was 90px shorter at the bottom)
+  // 90 px is the height of the navigation bar
+  // NB you can create the height parameter of the navigation bar programmatically and insert is in the rootMargin IMPORTANT to make it responsive
+};
+
+// this callback function is called each time the target element (i.e. the observed element, i.e. section1) is intersecting the root element (i.e. the viewport) at the define threshold
+const stickyNav = function (entries) {
+  // add and remove the sticky class
+  // entries is usually an array of threshold values, but in this case it is only 1
+  // let's use destructuring to take out the single value
+  const [entry] = entries; // same thing as writing entry = entries[0]
+  // console.log(entry);
+  /// only when the header is not intersecting the viewport, we want to add the sticky class
+  if (!entry.isIntersecting) {
     nav.classList.add("sticky");
   } else {
     nav.classList.remove("sticky");
+  } // i.e. when the target is NOT intersecting the root, then we want the sticky navbar, else remove it
+};
+const headerObserver = new IntersectionObserver(stickyNav, headerObsOpt);
+
+headerObserver.observe(header);
+
+//==============================================================================
+//## Revealing elements on scrolling with the INTERSECTION OBSERVER API (make sections slide in gradually)
+//==============================================================================
+// the animation itself comes from CSS, so we will simply add a class to each section as we approach them with scrolling
+
+// we have to add .section--hidden (see css) to give them an opacity of 0 and move them a bit down (done in html)
+// when we scroll on them, we remove this class
+
+// reveal sections
+
+const allSections = document.querySelectorAll(".section");
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  if (!entry.isIntersecting) return; // Guard clause: if not intersecting, then return right away (do nothing)
+
+  entry.target.classList.remove("section--hidden");
+
+  // unobserve because the observer is no longer necessary: this will make the sliding appear only once when you are in the webpage (to see it again you have to refresh)
+  observer.unobserve(entry.target); // best practice better for performance
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15, // the section is revealed only when it is 15% visible
+});
+
+allSections.forEach(function (section) {
+  // add the hidden class programmatically (better to do it here than in the html, because sometimes users disable JavaScript, so if you add these classes in the html, the page would not be visible)
+  section.classList.add("section--hidden");
+  sectionObserver.observe(section);
+});
+
+//==============================================================================
+//## LAZY LOADING IMAGES: performance is important!!!
+//==============================================================================
+// one of the most important things when building websites is performance
+// images have the biggest impact on page loading
+// therefore it is very important that images are optimized on any page
+// we can use a strategy calle Lazy Loading Images
+
+// IMPORTANT the main ingredient to this lazy loading strategy is that we have a very low resolution image (a really small image) loaded right in the beginning
+/// in the html you first insert the low resolution image in src="low-res-image.png"
+/// and you define the high resolution image in data-src="high-res-image.png" ("data-" is a special attribute that we can use but any other work as well)
+/// the idea is that when you scroll to one of the images, you replace the low resolution image with the high resolution image
+/// and remove the class lazy-img because it is the filter that makes the image blurred
+
+// only the images that have the "data-src" attribute will be lazy loaded, the other ones will not be lazy loaded
+const imgTargets = document.querySelectorAll("img[data-src]"); // select all the images that have the property data-src
+
+const loadHighResImage = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return; // Guard clause: if not intersecting, then return right away (do nothing)
+
+  // replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  // you have to wait for the image to finish loading before removing the blur filter (consider that there may be connection problems or slow connections)
+  entry.target.addEventListener("load", function () {
+    entry.target.classList.remove("lazy-img");
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadHighResImage, {
+  root: null,
+  threshold: 0,
+  rootMargin: "+200px", // so that you do not see any dealy (in this way users do not realize that is lazy loading)
+  // i.e. 200px before we reach them
+});
+
+imgTargets.forEach((img) => imgObserver.observe(img));
+
+//==============================================================================
+//## SLIDER COMPONENT
+//==============================================================================
+// establish the initial condition: all should be side by side
+// the following lines are just to understand how the HTML and CSS work
+// TODO uncomment for understanding how to work on sliders
+// const slider = document.querySelector(".slider");
+// slider.style.transform = "scale(0.4) translateX(-800px)";
+// slider.style.overflow = "visible";
+
+/// define the variables of interest
+const slides = document.querySelectorAll(".slide");
+const btnLeft = document.querySelector(".slider__btn--left");
+const btnRight = document.querySelector(".slider__btn--right");
+const dotContainer = document.querySelector(".dots");
+
+let currentSlide = 0;
+const maxSlide = slides.length;
+
+/// implement the dots
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      "beforeend",
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+/// function for activating the current dot
+const activateDot = function (slide) {
+  // remove the active class from all the dots
+  document
+    .querySelectorAll(".dots__dot")
+    .forEach((dot) => dot.classList.remove("dots__dot--active"));
+
+  // add the active class only for the one of interest
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`) // because you want to select based on the data-slide attribute
+    .classList.add("dots__dot--active");
+};
+
+/// function for going to a specific slide
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+};
+
+/// NEXT SLIDE and PREVIOUS SLIDE
+/// function for going to the next slide
+// going to the next slide == changing the value in the transform property, i.e. change the percentages of translateX
+const nextSlide = function () {
+  //maxSlide - 1 to make it zero based like the idx of the slides
+  if (currentSlide === maxSlide - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+  // currentSlide = 1: -100%, 0%, 100%, 200%
+  // here we want the first slide to go to -100%, the second slide to go to 0%, the third slide to go to 100%, and the fourth slide to go 200%
+  goToSlide(currentSlide); // this is after refactoring
+  activateDot(currentSlide);
+};
+
+/// function for going to previous slide
+const prevSlide = function () {
+  if (currentSlide === 0) {
+    currentSlide = maxSlide - 1;
+  } else {
+    currentSlide--;
+  }
+  goToSlide(currentSlide);
+  activateDot(currentSlide);
+};
+
+/// initial function call
+const init = function () {
+  // when the application starts, immediately go to slide 0 (the first one)
+  // instead of writing this:
+  // slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+  // you write this (after refactoring)
+  goToSlide(0);
+  // currentSlide = 0: 0%, 100%, 200%, 300%
+  // the first slide should be at 0%
+  // the second slide at 100% (because the width of the slide is 100%)
+  // the third slide at 200% (if you have 3 slides)
+  // then 300% (if you have 4 slides)
+
+  // create the dots at the beginning
+  createDots();
+  activateDot(0);
+};
+init();
+
+//# EVENT HANDLERS
+btnRight.addEventListener("click", nextSlide);
+btnLeft.addEventListener("click", prevSlide);
+
+// add event listener to buttons arrow left and arrow right so that you can use the keyboard to move
+document.addEventListener("keydown", function (e) {
+  console.log(e);
+  if (e.key === "ArrowLeft") prevSlide(); // normal if statement
+  e.key === "ArrowRight" && nextSlide(); // short circuiting
+});
+
+dotContainer.addEventListener("click", function (e) {
+  if (e.target.classList.contains("dots__dot")) {
+    // console.log("DOT");
+    // const slide = e.target.dataset.slide // is the same as:
+    const { slide } = e.target.dataset; // this is destructuring
+    goToSlide(slide);
+    activateDot(slide);
   }
 });
+
+//NB usually better in a single function like this
+/*
+const slider = function () {
+  // define the variables of interest
+  const slides = document.querySelectorAll(".slide");
+  const btnLeft = document.querySelector(".slider__btn--left");
+  const btnRight = document.querySelector(".slider__btn--right");
+  const dotContainer = document.querySelector(".dots");
+
+  let currentSlide = 0;
+  const maxSlide = slides.length;
+
+  // implement the dots
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        "beforeend",
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+
+  // function for activating the current dot
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll(".dots__dot")
+      .forEach((dot) => dot.classList.remove("dots__dot--active"));
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add("dots__dot--active");
+  };
+
+  // function for going to a specific slide
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  // NEXT SLIDE and PREVIOUS SLIDE
+  const nextSlide = function () {
+    if (currentSlide === maxSlide - 1) {
+      currentSlide = 0;
+    } else {
+      currentSlide++;
+    }
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+
+  // function for going to previous slide
+  const prevSlide = function () {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide - 1;
+    } else {
+      currentSlide--;
+    }
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+
+  // initial function call
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activateDot(0);
+  };
+  init();
+
+  // EVENT HANDLERS
+  btnRight.addEventListener("click", nextSlide);
+  btnLeft.addEventListener("click", prevSlide);
+
+  document.addEventListener("keydown", function (e) {
+    console.log(e);
+    if (e.key === "ArrowLeft") prevSlide();
+    e.key === "ArrowRight" && nextSlide();
+  });
+
+  dotContainer.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dots__dot")) {
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
+};
+// then call it like this
+slider();
+*/
