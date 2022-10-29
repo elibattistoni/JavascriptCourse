@@ -1,6 +1,6 @@
 "use strict";
 
-//# select all the elements of interest and store them in variables
+// select all the elements of interest and store them in variables
 // select elements (two ways of selecting elements with ids)
 const player0El = document.querySelector(".player--0");
 const player1El = document.querySelector(".player--1");
@@ -14,16 +14,18 @@ const btnNew = document.querySelector(".btn--new");
 const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
 
-//# define the variables outside and in the initialization function assign them a value
+// define the variables outside and in the initialization function assign them a value
+// NB you cannot declare inside a function variables that you use also outside
+// you should declare them outside, and in the function assign them the value
 let scores, currentScore, activePlayer, playing;
 
-//# define the initialization function and run it
+// define the initialization function and run it
 const init = function () {
   // we want the initialization function to be run in two conditions:
   // when the page reloads
   // when clicking the new game button
-  //IMPORTANT you cannot declare inside a function variables that you use also outside
-  // you should declare them outside, and in the function assign them the value
+
+  // assign values to variables
   scores = [0, 0];
   currentScore = 0;
   activePlayer = 0;
@@ -40,9 +42,11 @@ const init = function () {
   player0El.classList.add("player--active");
   player1El.classList.remove("player--active");
 };
+
+// run init function (every time the page is refreshed)
 init();
 
-//# define function for switching players
+// define function for switching players
 const switchPlayer = function () {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
   // Switch to next player
@@ -53,7 +57,7 @@ const switchPlayer = function () {
   player1El.classList.toggle("player--active");
 };
 
-//# Rolling dice functionality
+// Rolling dice functionality
 btnRoll.addEventListener("click", function () {
   if (playing) {
     // 1. Generate a random dice roll
@@ -76,7 +80,7 @@ btnRoll.addEventListener("click", function () {
   }
 });
 
-//# Button Hold
+// Button Hold
 btnHold.addEventListener("click", function () {
   if (playing) {
     // 1. Add current score to activer player total score
@@ -108,5 +112,5 @@ btnHold.addEventListener("click", function () {
 // if playing, we can click the buttons and everything works normally
 // as soon as the game is finished we will say that the game is no longer playing and can no longer click on these buttons
 
-//# Button new game RESET GAME
+// Button new game RESET GAME
 btnNew.addEventListener("click", init);

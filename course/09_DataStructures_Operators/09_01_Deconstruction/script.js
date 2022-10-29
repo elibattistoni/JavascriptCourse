@@ -26,7 +26,7 @@ const a = arr[0];
 const b = arr[1];
 const c = arr[2];
 
-//- Destructuring/unpacking assignment operation
+// Destructuring/unpacking assignment operation
 const [x, y, z] = arr;
 console.log(x);
 console.log(y);
@@ -40,7 +40,7 @@ console.log(first, second);
 const [one, , , four] = restaurant.categories;
 console.log(one, four);
 
-//- Switch variables
+// Switch variables
 let [main, secondary] = restaurant.categories;
 console.log(main, secondary);
 // const temp = main;
@@ -54,7 +54,7 @@ console.log(main, secondary);
 const [starterCourse, mainCourse] = restaurant.order(2, 0);
 console.log(starterCourse, mainCourse);
 
-//## nested arrays
+// nested arrays
 const nestedArr = [2, 4, [5, 6]];
 const [i, k, j] = nestedArr;
 console.log(i);
@@ -66,7 +66,7 @@ console.log(m);
 console.log(n);
 console.log(o);
 
-//## set default values for the variables when we are extracting them (useful when you don't know the length of the array)
+// set default values for the variables when we are extracting them (useful when you don't know the length of the array)
 const [p, q, r] = [1, 2];
 console.log(p, q, r); // r qill be undefined
 const [s = 1, t = 1, u = 1] = [1, 2];
@@ -75,8 +75,8 @@ console.log(s, t, u); // now it will not be undefined but it will get the defaul
 //==============================================================================
 //## DESTRUCTUING OBJECTS
 //==============================================================================
-//IMPORTANT extremely useful when we deal with the result of an API call (i.e. get data from another web application, like weather data or data about movies)
-//IMPORTANT this data usually comes in the form of objects and deconstructing allows us to write really much less code
+// IMPORTANT extremely useful when we deal with the result of an API call (i.e. get data from another web application, like weather data or data about movies)
+/// this data usually comes in the form of objects and deconstructing allows us to write really much less code
 
 const restaurant2 = {
   name: "Classico Italiano",
@@ -104,7 +104,7 @@ const restaurant2 = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  //NB in this function we take as input an object and deconstruct it, and in the deconstruction we assign default values
+  /// in this function we take as input an object and deconstruct it, and in the deconstruction we assign default values
   orderDelivery: function ({
     starterIndex = 1,
     mainIndex = 0,
@@ -121,8 +121,8 @@ const restaurant2 = {
 const { name, openingHours, categories } = restaurant2;
 console.log(name, openingHours, categories);
 
-// if you want the variable names to be different from the property names?
-// use the colon and specify a new name
+/// how to have variable names that are different from property names
+/// use the colon and specify a new name
 const {
   name: restaurantName,
   openingHours: hours,
@@ -130,19 +130,19 @@ const {
 } = restaurant2;
 console.log(restaurantName, hours, tags);
 
-//## default values if you are trying to read a property that does not exist on the object
+/// how to set default values (if you are trying to read a property that does not exist on the object)
 const { menu = [], starterMenu: starters = [] } = restaurant2;
 console.log(menu); // menu does not exist therefore it will get the default value of empty array
 console.log(starters);
 
-//# mutating variables when deconstructing objects
+/// mutating variables when deconstructing objects
 let xx = 111;
 let yy = 999;
 const obj = { xx: 23, yy: 7, jj: 14 };
 ({ xx, yy } = obj);
 console.log(xx, yy);
 
-//# nested objects
+/// nested objects
 // retrieve an object
 const { fri } = openingHours;
 console.log(fri);

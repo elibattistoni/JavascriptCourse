@@ -82,3 +82,48 @@ const ownersEatTooLittle = dogs
   .flat();
 console.log(`${ownersEatTooMuch.join(" and ")}'s dogs eat too much!`);
 console.log(`${ownersEatTooLittle.join(" and ")}'s dogs eat too little!`);
+
+// 5.
+dogs.forEach((dog, idx) => {
+  if (dog.recommendedFood === dog.curFood) {
+    console.log(`Dog number ${idx} is eating the exact amount of food`);
+  }
+});
+
+// 6.
+// console.log(250 + 250 * 0.1); // equal to // console.log(250 * 1.1);
+// console.log(250 - 250 * 0.1); // equal to // console.log(250 * 0.9);
+dogs.forEach((dog, idx) => {
+  if (
+    dog.curFood > dog.recommendedFood * 0.9 &&
+    dog.curFood < dog.recommendedFood * 1.1
+  ) {
+    console.log(`Dog number ${idx} is eating an OKAY amount of food`);
+  }
+});
+
+// 7.
+const dogsOkay2 = dogs.filter(
+  (dog) =>
+    dog.curFood > dog.recommendedFood * 0.9 &&
+    dog.curFood < dog.recommendedFood * 1.1
+);
+console.log(dogsOkay2);
+
+const dogsOkay = dogs.filter(function (dog) {
+  return (
+    dog.curFood > dog.recommendedFood * 0.9 &&
+    dog.curFood < dog.recommendedFood * 1.1
+  );
+});
+console.log(dogsOkay);
+
+// 8.
+const newDogs = dogs.slice();
+const newDogs2 = [...dogs];
+console.log(newDogs);
+console.log(newDogs2);
+
+console.log("Ascending order:");
+newDogs.sort((a, b) => a.recommendedFood - b.recommendedFood);
+console.log(newDogs);

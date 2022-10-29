@@ -53,11 +53,20 @@ console.log(myFirstName + myLastName);
 console.log(myFirstName + " " + myLastName);
 
 let x = 10;
+
+// IMPORTANT
 x += 1; // x = x + 1
-console.log(x);
+
+// IMPORTANT
 x *= 2; // x = x * 2
+
+// IMPORTANT
 x /= 2; // x = x / 2
+
+// IMPORTANT
 x++; // x = x + 1
+
+// IMPORTANT
 x--; // x = x - 1
 
 // bigger than >
@@ -83,7 +92,7 @@ const elisa =
 console.log(elisa);
 
 //=============================================================================
-//### template literal
+//# template literal
 const elisaNew = `I'm ${myName}, a ${thisYear - birthYear} years old ${job}`;
 console.log(elisaNew);
 // we can use backticks for any regular string
@@ -142,7 +151,7 @@ console.log(century);
 // convert strings to numbers
 const inputYear = "1991";
 console.log(inputYear + 10); // this will do a string concatenation
-console.log(Number(inputYear));
+console.log(Number(inputYear)); // IMPORTANT
 
 let inputYear2 = "1991";
 console.log(inputYear2, typeof inputYear2);
@@ -153,7 +162,7 @@ console.log(Number("Elisa")); // this returns NaN (Not a Number -- which actuall
 console.log(typeof NaN); // this returns number
 
 // convert numbers to strings
-console.log(String(23), 23);
+console.log(String(23), 23); // IMPORTANT
 
 // you can convert to Numbers, Strings, Booleans (you cannotconvert to other types)
 
@@ -172,11 +181,12 @@ console.log("23" / "2"); // this returns a number
 console.log(2 + 3 + 4 + "5"); // this returns a string, "95" because 2+3+4 equals 9, and 9+'5' equals '95
 
 //=============================================================================
+// IMPORTANT
 //# truthy and falsy values
-// falsy values = values that are not inherently false but will become false when we try to convert them into booleans
-// there are only 5 falsy values: 0, '', undefined, null, NaN
-// truthy values = values that when converted into booleans they become true
-// i.e. any value that is not 0, any string that is not an empty string
+/// falsy values = values that are not inherently false but will become false when we try to convert them into booleans
+/// there are only 5 falsy values: 0, '', undefined, null, NaN
+/// truthy values = values that when converted into booleans they become true
+/// i.e. any value that is not 0, any string that is not an empty string
 
 console.log(Boolean(0));
 console.log(Boolean(""));
@@ -220,6 +230,8 @@ if (age === 18) console.log("You became an adult");
 console.log(18 === 18); // true
 console.log(18 === "18"); // false
 console.log(18 === 19); // false
+
+// IMPORTANT
 //# loose equality operator == (it does type cohercion!!)
 console.log(18 == "18");
 
@@ -244,6 +256,7 @@ if (favourite2 === 23) {
   console.log("Number is not 23 nor 7");
 }
 
+// IMPORTANT
 //# strict inequality operator
 console.log(18 !== "18"); // returns true
 console.log(18 != "18"); // returns false
@@ -290,9 +303,9 @@ switch (day) {
 //# the switch statement (non strictly equality comparison)
 const something = { day: undefined };
 
-// null and undefined are non strictly undefined: null == undefined  is true,
-// null === undefined is false
-//  e.g. i am not sure what "soemthing" will be, and i cannot place a while cycle here
+/// null and undefined are non strictly undefined: null == undefined  is true,
+/// null === undefined is false
+//  e.g. i am not sure what "something" will be, and i cannot place a while cycle here
 // this is only useful if your backender is an idiot
 switch (true) {
   case something.day == null:
@@ -318,7 +331,7 @@ coolMap.set("wednesday", "wednesdayValue");
 coolMap.set("thursday", "thursdayValue");
 coolMap.set("friday", "fridayValue");
 
-const currentDay = coolMap.get(dayMap);
+const currentDay = coolMap.get(dayMap); /// how to get a value with a key with map
 
 currentDay != null ? console.log(currentDay) : console.log("not a day");
 

@@ -11,13 +11,13 @@ function calcAge(birthYear) {
     if (birthYear >= 1981 && birthYear <= 1996) {
       var millennial = true;
 
-      //# Creating NEW variable with same name as outer scope's variable
+      //- Creating NEW variable with same name as outer scope's variable
       // does not affect the outer scope's variable value
       const firstName = "Cristina";
 
-      //# Reassigning outer scope's variable
+      //- Reassigning outer scope's variable
       // does affect the outer scope's variable value
-      //NB reassignment does not behave like a new declaration!!
+      // reassignment does not behave like a new declaration!!
       output = "NEW OUTPUT";
 
       const str = `${firstName} you are a millennial`;
@@ -83,16 +83,16 @@ console.log(x === window.x);
 console.log(y === window.y);
 console.log(z === window.z);
 
-//---------------------------------------------------------------------------
+//==============================================================================
 //# THIS keyword
-//---------------------------------------------------------------------------
+//==============================================================================
 
 console.log(this); // this is the window global object
 
 const calcAgeExpr = function (birthYear) {
   console.log(`calcAgeExpr 2037 - birthYear ${2037 - birthYear}`);
   console.log("this inside calcAgeExpr: ");
-  console.log(this); //NB it is undefined
+  console.log(this); // it is undefined
 };
 // regular function call ("regular function call" == calling a function without attaching it to an object)
 calcAgeExpr(1991);
@@ -101,7 +101,7 @@ calcAgeExpr(1991);
 const calcAgeArrow = (birthYear) => {
   console.log(`calcAgeArrow 2037 - birthYear ${2037 - birthYear}`);
   console.log("this inside calcAgeArrow: ");
-  console.log(this); //NB it is window because the arrow function does not get
+  console.log(this); // it is window because the arrow function does not get
   // its own this keyword, so instead the arrow function simply uses the
   // lexical this keyword (i.e. it uses the this keyword of its parent function or of its parent scope)
 };
@@ -116,7 +116,7 @@ const jonas = {
   },
 };
 jonas.calcAge();
-//NB when we have a method call, the this keyword inside of the method will be the object that is calling the method
+/// when we have a method call, the this keyword inside of the method will be the object that is calling the method
 // in this case, the jonas object
 console.log("MATILDA");
 const matilda = { year: 2017 };
@@ -142,7 +142,7 @@ const elisa = {
     // const isMillennial = function () {
     //   console.log(this);
     //   console.log(self);
-    //   // console.log(this.year >= 1981 && this.year <= 1996);
+    //   console.log(this.year >= 1981 && this.year <= 1996);
     //   console.log(self.year >= 1981 && self.year <= 1996);
     // };
 
@@ -169,9 +169,9 @@ console.log(this.firstName);
 
 elisa.calcAge();
 
-//---------------------------------------------------------------------------
+//==============================================================================
 //# arguments keyword (dealing with multiple parameters)
-//---------------------------------------------------------------------------
+//==============================================================================
 const myAddExpr = function (a, b) {
   console.log(arguments);
   console.log(a, b);
@@ -201,9 +201,10 @@ myAddExpr(1, 2, 3, 4, 5, 6, 7, 8); // look at the console: the arguments keyword
 /// but the existing value can not be changed in the ways that objects, arrays, and functions can be altered.
 /// Primitives have no methods but still behave as if they do. When properties are accessed on primitives,
 /// JavaScript auto-boxes the value into a wrapper object and accesses the property on that object instead.
-//---------------------------------------------------------------------------
+
+//==============================================================================
 //# copies of variables
-//---------------------------------------------------------------------------
+//==============================================================================
 console.log("copies of variables.....");
 let age = 30;
 console.log(age);

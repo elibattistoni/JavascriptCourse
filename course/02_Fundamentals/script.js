@@ -49,27 +49,22 @@ console.log(myJuice);
 // there are different ways for writing functions, and they work in different ways
 console.log("function declarations vs function expressions");
 
-//# function declaration
-// the one above is a function declaration
-
+//~ function declaration
 function calculateAge(birthYear) {
   return 2037 - birthYear;
 }
-
 const age1 = calculateAge(1991);
-console.log(age1);
+// console.log(age1);
 
-//# function expression or anonymous function
-
+//~ function expression or anonymous function
 const calculateAge2 = function (birthYear) {
   return 2037 - birthYear;
 };
-
 const age2 = calculateAge2(1991);
-console.log(age2);
+// console.log(age2);
 
 //! what is the big difference between function declaration and function expression?
-// we can call function declarations before they are defined in the code
+/// we can call function declarations before they are defined in the code
 const age3 = calcAge(1991);
 console.log(age3);
 
@@ -86,7 +81,7 @@ function calcAge(myYear) {
 //# arrow functions
 console.log("arrow function");
 
-// arrow function = special form of function expression that is shorter and faster to write
+/// arrow function = special form of function expression that is shorter and faster to write
 const calcAge4 = (birthYear) => 2037 - birthYear;
 // 1) no curly brackets
 // 2) no need for return keyword
@@ -179,8 +174,8 @@ console.log(userAges);
 //# basic array operations (methods)
 // js has some built in functions that we can apply directly on arrays (methods = array operations)
 
-//# push
-//# the push method adds elements to the end of an array
+/// push
+/// the push method adds elements to the end of an array
 const myFriends = ["Elisa", "Franco"];
 myFriends.push("Alberto");
 console.log(myFriends);
@@ -190,8 +185,8 @@ const lenFriends = myFriends.push("Xavi");
 console.log(myFriends);
 console.log(lenFriends);
 
-//# unshift
-//# the unshift methods adds elements to the beginning of an array
+/// unshift
+/// the unshift methods adds elements to the beginning of an array
 myFriends.unshift("Giovanni");
 console.log(myFriends);
 const whatIs = myFriends.unshift("Noriberto"); // it also returns the length
@@ -199,8 +194,8 @@ console.log(myFriends);
 console.log(myFriends.length);
 console.log(`whatIs ${whatIs}`);
 
-//# pop
-//# removes the last element of the array
+/// pop
+/// removes the last element of the array
 myFriends.pop();
 console.log(myFriends);
 // the pop method returns the removed element
@@ -208,8 +203,8 @@ const removedFriend = myFriends.pop();
 console.log(myFriends);
 console.log(removedFriend);
 
-//# shift
-//# remove first element of array
+/// shift
+/// remove first element of array
 console.log("shift");
 
 console.log(myFriends);
@@ -218,13 +213,13 @@ const whatRemoved = myFriends.shift();
 console.log(myFriends);
 console.log(whatRemoved);
 
-//# indexOf
-//# in which position a certain element is in the array
+/// indexOf
+/// in which position a certain element is in the array
 console.log(myFriends.indexOf("Elisa"));
 // you will get -1 if the element is not present
 
-//# includes
-//# returns true if an element is in the array, otherwise false
+/// includes
+/// returns true if an element is in the array, otherwise false
 // this uses strict equality
 console.log(myFriends.includes("Elisa"));
 console.log(myFriends.includes("Bob"));
@@ -285,7 +280,8 @@ console.log(
 
 //=============================================================================
 //# object methods
-// in the key-value pair, the value can also be a function
+
+/// in the key-value pair, the value can also be a function
 console.log("elisa2");
 const elisa2 = {
   firstName: "Elisa",
@@ -309,7 +305,7 @@ console.log(elisa2["calcAge"](1991));
 //# this
 // in every method, js gives us access to a special variable called this
 // we can read the birth year from the object itself without having to pass it in as a parameter into the function
-// the this keyword or the this variable is basically equal to the object on which the method is called (equal to the object calling the method)
+/// the this keyword or the this variable is equal to the object on which the method is called (equal to the object calling the method)
 console.log("elisa3");
 const elisa3 = {
   firstName: "Elisa",
@@ -323,7 +319,7 @@ const elisa3 = {
 console.log(elisa3.calcAge());
 
 //# this
-// you can use the this keyword to store a new property
+/// you can use the this keyword to store a new property
 // this is the most efficient solution
 console.log("elisa4");
 const elisa4 = {
@@ -335,7 +331,7 @@ const elisa4 = {
     return this.age; // best practice to return the computed result
   },
 };
-console.log(elisa4.calcAge()); // you have to call it first and then you can access the property created after running the function
+console.log(elisa4.calcAge()); /// you have to call it first and then you can access the property created after running the function
 console.log(elisa4.age);
 
 // exercise
@@ -443,8 +439,3 @@ while (dice2 !== 6) {
   console.log(`you rolled a dice2 ${dice2}`);
   if (dice2 === 6) console.log("Loop is about to end...");
 }
-
-// BUG FIXME NOTE IMPORTANT TODO
-//- gjnsfdgjnsfkl
-//# kgnflsdngkl
-//= njkglsjknlk
