@@ -14,7 +14,7 @@
 /// PROTOTYPAL INHERITANCE or DELEGATION = all objects that are linked to a certain prototype object can use (inherit) methods and properties defined in the prototype
 // NB this is not class inheritance
 // - class inheritance means that one class inherits from another class
-/// this is very different: pin rototypal inheritance, an instance inherits from a class
+/// this is very different: in prototypal inheritance, an instance inherits from a class
 // technically objects (instances) delegate behavior (methods) to the prototype
 // in classical OOP, the behavior (methods) is actually copied from the class to the class or object (and this is completely different from JS OOP)
 
@@ -29,7 +29,7 @@
 //==============================================================================
 // we can use constructor functions to build an object using a function
 
-//in OOP there is the convention that CONSTRUCTOR FUNCTIONS always start with a capital letter
+// in OOP there is the convention that CONSTRUCTOR FUNCTIONS always start with a capital letter
 // we can use a function expression (like the example below) or a function declaration, but you cannot use an arrow function because it does not have the this keyword
 // this function is going to produce an object
 const Person = function (firstName, birthYear) {
