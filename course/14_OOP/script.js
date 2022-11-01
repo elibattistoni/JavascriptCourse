@@ -27,6 +27,10 @@
 //==============================================================================
 //# CONSTRUCTOR FUNCTIONS and the NEW OPERATOR
 //==============================================================================
+console.log(
+  "---------- PROTOTYPAL INHERITANCE: CONSTRUCTOR FUNCTIONS ----------"
+);
+
 // we can use constructor functions to build an object using a function
 
 // in OOP there is the convention that CONSTRUCTOR FUNCTIONS always start with a capital letter
@@ -183,6 +187,8 @@ console.dir((x) => x + 1); // its prototype contsins the methods we have previou
 //==============================================================================
 //# ES6 CLASSES
 //==============================================================================
+console.log("---------- PROTOTYPAL INHERITANCE: ES6 CLASSES ----------");
+
 // we implemented prototypal inheritance with constructor functions, and then we
 // manually set the methods on the prototype property of the constructor function
 
@@ -246,6 +252,8 @@ elisa.greetAgain();
 //==============================================================================
 //# SETTERS & GETTERS: SETTER PROPERTY and GETTER PROPERTY = "ASSESSOR PROPERTY"
 //==============================================================================
+console.log("---------- SETTERS & GETTERS ----------");
+
 // this is a feature that is commo to all objects in JavaScript
 // every object in JS can have a setter and getter property
 
@@ -348,6 +356,8 @@ console.log(me.fullName);
 //==============================================================================
 //# STATIC METHODS
 //==============================================================================
+console.log("---------- STATIC METHODS ----------");
+
 console.log(Array.from(document.querySelectorAll("h1")));
 // the .from() method is attached to the entire Array constructor, not to the prototype property of the constructor (therefore all the arrays do not inherit this method)
 // you cannot use it on an array, e.g.:
@@ -373,6 +383,8 @@ FullPerson.hey();
 //==============================================================================
 //# Object.create()
 //==============================================================================
+console.log("---------- PROTOTYPAL INHERITANCE: Object.create() ----------");
+
 //~ we learned about CONSTRUCTOR FUNCTIONS and ES6 CLASSES, but there is a third way of implementing PROTOTYPAL INHERITANCE or DELEGATION
 
 // this function works in a pretty different way than constructor functions and classes
@@ -479,26 +491,369 @@ console.dir(Student.prototype.constructor);
 //==============================================================================
 //# INHERITANCE BETWEEN CLASSES: ES6 CLASSES
 //==============================================================================
+console.log("---------- INHERITANCE BETWEEN CLASSES: ES6 ----------");
+
+// NB the class syntax hides a lot od details that are actually happening behind the scenes, because classes are really just a layer of abstraction over constructor functions
+
+class PersonClass {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // instance method
+  calculateAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  set fullName(name) {
+    if (name.includes(" ")) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // static method
+  static hey() {
+    console.log("HEY THERE!! 🌝");
+  }
+}
+
+// NB to implement inheritance between ES6 classes we only need: the extends keyword and the super function
+// let's now inherit from this class
+// the extends keyword alone will link the prototypes behind the scenes
+// super() is the constructor function of the parent class (it replaces .call())
+class StudentClass extends PersonClass {
+  constructor(fullName, birthYear, course) {
+    super(fullName, birthYear); // pass in the parameters that are specified in the constructor function of the parent class, and this is always first because it is responsible for creating the this keyword in this subclass (child class)
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  // the calculateAge overrides or shadows the calculateAge method in PersonClass
+  calculateAge() {
+    console.log("I feel older");
+  }
+}
+
+const martha = new StudentClass("Martha Jones", 2002, "Computer Science");
+console.log(martha);
+martha.introduce();
+martha.calculateAge();
+
+/// you do not need to have a constructor, it works
+// this is just to demonstrate that if you do not need any new properties, you don't even need to write a constructor method in the child class
+class StudentClass2 extends PersonClass {}
+const martin = new StudentClass2("Martin Guerrero", 2000);
+console.log(martin);
 
 //==============================================================================
 //# INHERITANCE BETWEEN CLASSES: Object.create()
 //==============================================================================
+console.log(
+  "---------- INHERITANCE BETWEEN CLASSES Object.create() ----------"
+);
+
+// NB with this version we do not worry about constructors, prototype properties, and the new operator
+// NB with Object.create() you are not faking classes (you are faking classes when you use ES6 classes and constructor functions),
+// NB you are simply linking objects together, where some objects then serve as the prototype of other objects
+
+// parent class
+const PersonProtoNew = {
+  calculateAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+// instance of parent class
+const chrisParent = Object.create(PersonProtoNew);
+
+// child class
+const StudentProtoNew = Object.create(PersonProtoNew); // PersonProtoNew is the prototype of StudentProtoNew
+StudentProtoNew.init = function (firstName, birthYear, course) {
+  // the child prototype can reuse the init method from the person prototype (which is a parent prototype)
+  PersonProtoNew.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+StudentProtoNew.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+// instance of child class
+const chrisSon = Object.create(StudentProtoNew); // StudentProtoNew is the prototype of chrisSon
+// therefore, PersonProtoNew is a parent prototype of chrisSon
+chrisSon.init("Chris", 2000, "Computer Science");
+chrisSon.introduce();
+chrisSon.calculateAge();
 
 //==============================================================================
 //# Another class example
 //==============================================================================
+console.log("---------- ANOTHER CLASS EXAMPLE ----------");
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks ${this.owner} for opening an account!`);
+  }
+
+  // Public interface
+  deposit(val) {
+    this.movements.push(val);
+  }
+  // the withdraw method abstracts the fact that a withdrawal is basically a negative movement
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log("Loan approved");
+    }
+  }
+}
+
+const acc1 = new Account("Jonas", "EUR", 1111);
+console.log(acc1);
+
+// NB not a good idea to interact with properties in the following method!
+// acc1.movements.push(250)
+// acc1.movements.push(-120)
+// BEST PRACTICE: create methods that interact with these properties, especially if they are important properties
+
+acc1.deposit(300);
+acc1.withdraw(20);
+// NB these methods .deposit() and .withdraw() are the interface to our objects (we also call this API)
+
+// security: some methods and properties should not be accessible
+// e.g. we only want this to be accessible:
+acc1.requestLoan(1000);
+// but you do not want this to be accessible:
+acc1.approveLoan(1000); // this is an internal method that only the requestLoan method should use
+
+/// we really need data encapsulation and data privacy
 
 //==============================================================================
 //# ENCAPSULATION: PROTECTED PROPERTIES AND METHODS
 //==============================================================================
+console.log("---------- DATA PRIVACY & ENCAPSULATION ----------");
+
+/// ENCAPSULATION = keeping some properties and methods private inside the class, so that they are not accessible form outside the class
+/// the rest of the methods are exposed as a public interface (which we can also call API)
+
+// NB why do you need ENCAPSULATION and DATA PRIVACY?
+// NB 1) in order to prevent code from outside of a class to accidentally manipulate the data inside the class (e.g. the movements property in the example above)
+// NB 2) when we expose only a small interface (a small API) consisting only of a few public methods,
+// NB then we can change all the other internal methods with more confidence,
+// NB because in this case we can be sure that external code does not rely on these private methods
+// NB therefore our code will not break when we do internal changes
+
+/// JS classes actually do not yet support real data privacy and encapsulation (it is on the way)
+/// so we will fake encapsulation by using a convention
+
+class AccountEncapsulated {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this._pin = pin; // protected property
+    this._movements = []; // protected property
+    this.locale = navigator.language;
+
+    console.log(`Thanks ${this.owner} for opening an account!`);
+  }
+
+  // Public interface
+  getMovements() {
+    return this._movements;
+  }
+  deposit(val) {
+    this._movements.push(val);
+  }
+  // the withdraw method abstracts the fact that a withdrawal is basically a negative movement
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  _approveLoan(val) {
+    return true;
+  } // _approveLoan should not be part of the public API, but all the others should be
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log("Loan approved");
+    }
+  }
+}
+
+const acc2 = new AccountEncapsulated("Elisa", "USD", 2222);
+acc2.deposit(300);
+acc2.deposit(1570);
+acc2.withdraw(20);
+acc2.requestLoan(10000);
+
+// _ does not make the property or method truly private, it is just a convention
+// NB _movements is a "protected property", not a private proprty because it is not truly private
+
+console.log(acc2._movements); /// the data is still accessible but at least you and your team will know that this property is not supposed to be touched outside of the class
+console.log(acc2.getMovements());
 
 //==============================================================================
 //# ENCAPSULATION: PRIVATE CLASS FIELDS AND METHODS
 //==============================================================================
+/// TRULY PRIVATE FIELDS AND METHODS
+// there is a proposal called "Class fields proposal" that is ongoing and it will be approved sometime in the future
+// but some parts of this proposal already work in Google Chrome (only here)
+
+//- CLASS FIELDS
+// in traditional OOP languages like Java and C++, properties are usually called fields
+// therefore with this new proposal, JS is moving away from the idea that classes are just syntactic sugar over constructor functions
+// because with this new class features, classes will start to have abilities that we did not previously have with constructor functions
+
+/// in this proposal there are 4 (actually 8) different kinds of fields and methods
+/// 1. PUBLIC FIELDS
+/// 2. PRIVATE FIELDS
+/// 3. PUBLIC METHODS
+/// 4. PRIVATE METHODS
+/// each one has also the STATIC version, that is why there are 8
+
+/// FIELD = property that will be on all instances
+
+class AccountX {
+  //~ PUBLIC FIELDS (on instances, not on prototype)
+  // i.e. fields that will be present on all the instances that we create through the class: NB they are not on the prototype!! (referenceable by the this keyword)
+  locale = navigator.language;
+
+  //~ PRIVATE FIELDS (on instances, not on prototype)
+  // i.e. fields that are truly not accessible from the outside
+  #movements = [];
+  #pin; // set to empty because you cannot have it in the constructor, but you set the pin based on the input value to the constructor
+
+  // constructor
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+  }
+
+  //~ PUBLIC METHODS (public interface, API)
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+  }
+
+  // the withdraw method abstracts the fact that a withdrawal is basically a negative movement
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  requestLoan(val) {
+    // if (this.#approveLoan(val)) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log("Loan approved");
+    }
+  }
+
+  //~ PRIVATE METHODS (not yet implemented, so switching to protected)
+  // useful to hide the implementation details from outside
+  // #approveLoan(val) {
+  _approveLoan(val) {
+    return true;
+  } // NB no browser supports this
+
+  //~ static methods: they are not available on all the instances but only on the class itself
+  static helper() {
+    console.log("THIS IS THE CLASS HELPER");
+  }
+}
+
+const accx = new AccountX("Elisa", "EUR", 3333);
+accx.deposit(2000);
+accx.deposit(7368);
+accx.deposit(6637);
+accx.withdraw(200);
+accx.requestLoan(20389457);
+console.log(accx.movements);
+// console.log(accx.#movements); // error
+console.log(accx.getMovements()); // but you can still get the movements through the public interface (API)
+
+console.log(accx.pin);
+// console.log(accx.#pin); // error
+console.log(accx);
+// console.log(accx.#approveLoan(534)); // its says "private fields"... not "private methods", therefore they are not yet available
+
+AccountX.helper();
 
 //==============================================================================
 //# CHAINING METHODS
 //==============================================================================
+// like chaining array methods
+
+class AccountK {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this._pin = pin;
+    this._movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks ${this.owner} for opening an account!`);
+  }
+
+  getMovements() {
+    return this._movements;
+  }
+  deposit(val) {
+    this._movements.push(val);
+    return this;
+  }
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+  _approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log("Loan approved");
+      return this;
+    }
+  }
+}
+
+// BEST PRACTICE returning this, i.e. the object, makes the method chainable, and this makes most sense in methods that set some property
+const acck = new AccountK("Gelsomino", "STERLINE", 4444);
+acck.deposit(300).deposit(500).withdraw(200).requestLoan(72638); // we want acck.deposit(300) to return acck, so that you can chain the next oepration, then return acck, then chain the other operation
+console.log(acck.getMovements());
 
 //==============================================================================
 //# ES6 CLASSES SUMMARY

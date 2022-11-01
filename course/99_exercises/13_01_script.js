@@ -102,9 +102,13 @@ EV.prototype.chargeBattery = function (chargeTo) {
   this.charge = chargeTo;
 };
 
+// also Car has the method accelerate
+// NB when there are two methods or properties with the same name in the prototype chain, then the first one that appears in the chain is the one that is going to be used
+// NB in thsi way a child class can override a method or property that is defined in the parent class (THIS IS POLYMORPHISM!!)
+// if we did not create this accelerate method, it would still work, because it would inherit the method (JS finds it in the prototype chain)
 EV.prototype.accelerate = function () {
   this.speed += 20;
-  this.charge -= 1;
+  this.charge--;
   console.log(
     `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
   );
@@ -114,7 +118,8 @@ const tesla = new EV("Tesla", 120, 23);
 console.log(tesla);
 tesla.chargeBattery(90);
 console.log(tesla);
+tesla.brake();
 
 tesla.accelerate();
 tesla.accelerate();
-console.log(tesla);
+console.log(tesla); // inspect: both the EV and the Car have the method accelerate, but Javascript uses the first one
