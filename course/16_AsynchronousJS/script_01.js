@@ -1,5 +1,7 @@
 "use strict";
 
+const countriesContainer = document.querySelector(".countries");
+
 //==============================================================================
 //# Our first AJAX call: XML HTTP request function
 //==============================================================================
@@ -50,42 +52,16 @@ const getCountryData = function (country) {
   });
 };
 
+// you can call more than 2 times the function at the same time
 getCountryData("italy");
 getCountryData("portugal");
-getCountryData("germany");
-getCountryData("usa");
+// getCountryData("germany");
+// getCountryData("usa");
 // by calling this function twice, we will basically have two AJAX calls happening at the same time (in parallel)
 // if you reload the page a few times they might appear in different order because the data arrives at a slightly different time
 
 // NB if we wanted these requests to be made in a specific order, we would have to chain the requests, i.e. to make the second request only after the first request has finished.
 
 //==============================================================================
-//# ORDERED AJAX: Callback Hell
+//# ORDERED AJAX: Callback Hell: script_02.js
 //==============================================================================
-
-//==============================================================================
-//#
-//==============================================================================
-
-//==============================================================================
-//#
-//==============================================================================
-
-//==============================================================================
-//#
-//==============================================================================
-
-//==============================================================================
-//#
-//==============================================================================
-
-//==============================================================================
-//#
-//==============================================================================
-
-//==============================================================================
-//#
-//==============================================================================
-
-const btn = document.querySelector(".btn-country");
-const countriesContainer = document.querySelector(".countries");

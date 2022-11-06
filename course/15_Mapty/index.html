@@ -20,6 +20,7 @@
       integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
       crossorigin=""
     />
+
     <!--  IMPORTANT to defer also the JS for leaflet -->
     <script
       defer
@@ -28,9 +29,22 @@
       crossorigin=""
     ></script>
 
-    <!-- OUR JS -->
-    <script defer src="script.js"></script>
+    <!-- ICONS -->
+    <!-- <script defer src="https://kit.fontawesome.com/10797fc3fb.js" crossorigin="anonymous"></script> -->
+    <link defer rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
 
+    <!-- IMPORTANT UR JS -->
+    <!-- # first script -->
+    <!-- <script defer src="script_n01_spaghetti.js"></script> -->
+
+    <!-- # script with code refactoring and notes-->
+    <!-- <script defer src="script.js"></script> -->
+
+    <!-- script with further challenges-->
+    <script defer src="script_mapty_challenge.js"></script>
+
+    <!-- end -->
     <title>mapty // Map your workouts</title>
   </head>
   <body>
@@ -73,57 +87,13 @@
           </div>
           <button class="form__btn">OK</button>
         </form>
-
-        <!-- <li class="workout workout--running" data-id="1234567890">
-          <h2 class="workout__title">Running on April 14</h2>
-          <div class="workout__details">
-            <span class="workout__icon">🏃‍♂️</span>
-            <span class="workout__value">5.2</span>
-            <span class="workout__unit">km</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⏱</span>
-            <span class="workout__value">24</span>
-            <span class="workout__unit">min</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
-            <span class="workout__value">4.6</span>
-            <span class="workout__unit">min/km</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">🦶🏼</span>
-            <span class="workout__value">178</span>
-            <span class="workout__unit">spm</span>
-          </div>
-        </li>
-
-        <li class="workout workout--cycling" data-id="1234567891">
-          <h2 class="workout__title">Cycling on April 5</h2>
-          <div class="workout__details">
-            <span class="workout__icon">🚴‍♀️</span>
-            <span class="workout__value">27</span>
-            <span class="workout__unit">km</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⏱</span>
-            <span class="workout__value">95</span>
-            <span class="workout__unit">min</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
-            <span class="workout__value">16</span>
-            <span class="workout__unit">km/h</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⛰</span>
-            <span class="workout__value">223</span>
-            <span class="workout__unit">m</span>
-          </div>
-        </li> -->
       </ul>
 
-      <p class="copyright">
+      <div class="button__div">
+        <button id="deleteAll"><i class="fa-solid fa-trash-can bin__icon"></i></button>
+      </div>
+
+      <!-- <p class="copyright">
         &copy; Copyright by
         <a
           class="twitter-link"
@@ -132,7 +102,8 @@
           >Jonas Schmedtmann</a
         >. Use for learning or your portfolio. Don't use to teach. Don't claim
         as your own.
-      </p>
+      </p> -->
+      
     </div>
 
     <div id="map"></div>

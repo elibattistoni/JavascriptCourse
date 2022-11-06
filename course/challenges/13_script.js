@@ -123,3 +123,49 @@ tesla.brake();
 tesla.accelerate();
 tesla.accelerate();
 console.log(tesla); // inspect: both the EV and the Car have the method accelerate, but Javascript uses the first one
+
+//==============================================================================
+//## coding challenge #4
+//==============================================================================
+console.log("---------- CODING CHALLENGE #4 ----------");
+
+class ElectricCarClass extends CarClass {
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    console.log(this);
+    return this; // needed for chaining
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(this);
+    return this; // needed for chaining
+  }
+
+  brake() {
+    this.speed -= 3;
+    console.log(this);
+    return this;
+  }
+}
+
+const rivian = new ElectricCarClass("Rivian", 120, 23);
+console.log(rivian);
+
+rivian
+  .chargeBattery(50)
+  .accelerate()
+  .accelerate()
+  .brake()
+  .accelerate()
+  .chargeBattery(100)
+  .brake()
+  .brake();

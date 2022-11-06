@@ -4,6 +4,7 @@
 
   --color-dark--1: #2d3439;
   --color-dark--2: #42484d;
+  --color-dark--3: #272B2EFF;
   --color-light--1: #aaa;
   --color-light--2: #ececec;
   --color-light--3: rgb(214, 222, 224);
@@ -77,9 +78,11 @@ a:visited {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 0.75rem 1.5rem;
 }
+
 .workout--running {
   border-left: 5px solid var(--color-brand--2);
 }
+
 .workout--cycling {
   border-left: 5px solid var(--color-brand--1);
 }
@@ -215,6 +218,36 @@ a:visited {
 .running-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--2);
 }
+
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
+}
+
+
+.button__div {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding-top: 1rem;
+}
+
+#deleteAll {
+  border: none;
+  font-size: 2rem;
+  height: 6rem;
+  width: 6rem;
+  box-shadow: 0 0.5rem 1rem var(--color-dark--3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--color-dark--2);
+  border-radius: 70%;
+}
+
+#deleteAll:active {
+  transform: translateY(0.5rem);
+}
+
+.bin__icon {
+  color: var(--color-light--1);
+  background-color: transparent;
 }
