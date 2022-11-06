@@ -23,7 +23,7 @@ const renderCountryData = function (data, className = "") {
   </article>
   `;
   countriesContainer.insertAdjacentHTML("beforeend", html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 
 //==============================================================================
@@ -40,7 +40,7 @@ const renderCountryData = function (data, className = "") {
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText("beforeend", msg);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 
 const getCountryNeighbour = function (country) {
@@ -73,9 +73,12 @@ const getCountryNeighbour = function (country) {
       // NB err is a JavaScript object (we can create errors in JS with a constructor, like we create e.g. maps or sets)
       // NB any error created like this contains the messag property, so we can use that property to print the message and not the whole object
       // NB the err object contains also the stack trace
+
+      // NB .catch() returns a promise that .finally() will use as input
     })
     .finally(() => {
-      // NB this callback function will be called whatever happens with the promise: it iwll be called no matter if the promise was fulfilled or rejected
+      // NB this callback function will be called whatever happens with the promise: it will be called no matter if the promise was fulfilled or rejected
+      countriesContainer.style.opacity = 1;
     });
 };
 
@@ -92,5 +95,118 @@ btn.addEventListener("click", function () {
 /// 2. handle all the errors globally with the .catch() method
 
 // NOTE: .then() is called if the promise is fulfilled; .catch() is called if the promise is rejected; .finally() is called always (regardless of whether the promise is fulfilled or rejected)
+//~ the .finally() method is not always useful but sometimes it is: we use this method for something that always needs to happen no matter the result of the promise
+//~ an example is to hide a loading spinner (e.g. rotating circles that you see everywhere in web applications when you load some data)
+//~ these applications show a spinner when an asynchronous operation starts and hide it once the operation completes, and this happens no matter if the operation is successful or not
+//~ what we always need to do is to fade-in the container: countriesContainer.style.opacity = 1; no matter if we renderCountry or we renderError
 
-// TODO continue with lecture 254 at 7:44
+// simulate another error:
+// getCountryNeighbour("osidflj"); // TODO uncomment to see this work
+
+/// IMPORTANT the .fetch() promise only rejects when there is no internet connection,
+/// but with a 404 error (like the one that you get if you enter a country that does not exist)
+/// the fetch() promise will still get fulfilled, so there is no rejection and so our catch handler cannot pick up on this error
+/// it picks up an error but it is not the real error: the real error is that there is no country with the name "osidflj"
+
+//==============================================================================
+//# THROWING ERRORS MANUALLY
+//==============================================================================
+// getCountryNeighbour("osidflj");
+// the problem with this was that fduring the fetch there was a 404 error because our API could not find any country with this name
+// but the fetch function did not reject
+// so we have to do it manually
+
+/*
+const getCountryNeighbour2 = function (country, render = true) {
+  const apiUrl = `https://restcountries.com/v3.1/name/${country}`;
+  fetch(apiUrl)
+    .then((response) => {
+      console.log("log Country 1", response); // this is the first .then() handler which gets access to the direct response of the API
+      // inspect: ok is false and status is 404
+      if (!response.ok && response.status === 404) {
+        throw new Error(`${response.status}: Country not found`);
+        // throw immediately terminates the current function (like return) so that the promise will immediately reject and enters the .catch() method
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (render) {
+        renderCountryData(data[0]);
+      }
+
+      const neighbour = data[0].borders?.[0] || null;
+      if (!neighbour) return;
+      const neighbourUrl = `https://restcountries.com/v3.1/alpha/${neighbour}`;
+      return fetch(neighbourUrl);
+    })
+    .then((response) => {
+      console.log("log Country 2", response);
+
+      if (!response.ok && response.status === 404) {
+        throw new Error(`${response.status}: Country not found`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (render) {
+        renderCountryData(data[0], "neighbour");
+      }
+    })
+    .catch((err) => {
+      renderError(`Something went wrong 💥 💥 💥 ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+getCountryNeighbour2("odfsj", false);
+
+*/
+
+// we can use the fact that the ok property set to false to reject the promise manually
+
+// best practice to always handle errors in promises with .catch() and .finally() and manually handling errors
+
+const getJSON = function (url) {
+  return fetch(url).then((response) => {
+    if (!response.ok) {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    return response.json();
+  });
+};
+
+const getCountryNeighbour2 = function (country, render = true) {
+  const apiUrl = `https://restcountries.com/v3.1/name/${country}`;
+  getJSON(apiUrl)
+    .then((data) => {
+      console.log(data[0]);
+      if (render) {
+        renderCountryData(data[0]);
+      }
+
+      const neighbour = data[0].borders?.[0] || null;
+      console.log(neighbour);
+      // let's handle the fact that there might be no neighbour
+      if (!neighbour) throw new Error("No new neighbour found");
+      const neighbourUrl = `https://restcountries.com/v3.1/alpha/${neighbour}`;
+      return getJSON(neighbourUrl);
+    })
+    .then((data) => {
+      console.log(data[0]);
+      if (render) {
+        renderCountryData(data[0], "neighbour");
+      }
+    })
+    .catch((err) => {
+      renderError(`Something went wrong 💥 💥 💥 ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+// getCountryNeighbour2("dnsldn", true);
+// getCountryNeighbour2("portugal", true);
+getCountryNeighbour2("australia", true);
