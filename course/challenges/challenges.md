@@ -44,7 +44,7 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 - coding challenge #3 DONE -- to check
 - coding challenge #4 DONE -- to check
 
-## 12_NumbersDatesTimers TODO
+## 12_NumbersDatesTimers TODO all section
 
 ## 13_AdvancedDOM
 DONE
@@ -53,10 +53,10 @@ DONE
 - coding challenge #1 DONE
 - coding challenge #2 DONE
 - coding challenge #3 DONE
-- coding challenge #4 DONE -- to check
+- coding challenge #4 DONE -- TODO to check
 
 ## 15_Mapty
-- exercises and challenges at the end of the video
+- exercises and challenges at the end of the video TODO
 
 ## 16_Asynchronous
 - coding challenge #1 TODO
