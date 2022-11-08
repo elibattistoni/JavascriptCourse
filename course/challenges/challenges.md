@@ -44,11 +44,23 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 - coding challenge #3 DONE -- to check
 - coding challenge #4 DONE -- to check
 
-## 13_OOP
+## 12_NumbersDatesTimers TODO
+
+## 13_AdvancedDOM
+DONE
+
+## 14_OOP
 - coding challenge #1 DONE
 - coding challenge #2 DONE
 - coding challenge #3 DONE
 - coding challenge #4 DONE -- to check
 
-## 14_Mapty
+## 15_Mapty
 - exercises and challenges at the end of the video
+
+## 16_Asynchronous
+- coding challenge #1 TODO
+- coding challenge #2 TODO
+- coding challenge #3 TODO
+
+Next is Section 17 Modern JavScript development
