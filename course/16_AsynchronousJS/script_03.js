@@ -115,7 +115,7 @@ const getCountryDataRefactored = function (country) {
 
 // NB Promises do not get rid of callbacks; they get rid of the callback hell
 
-// NB the then methos always returns a promise, no matter if it returns a value or not;
+// NB the then method always returns a promise, no matter if it returns a value or not;
 // NB if it returns a value, than that value will become the fulfillment value of the return promise
 
 //==============================================================================

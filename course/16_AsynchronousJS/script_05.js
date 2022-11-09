@@ -12,7 +12,7 @@ const countriesContainer = document.querySelector(".countries");
 console.log(">>>>>>> Test start"); // NB position in run: 1 (because it is synchronous)
 
 // let's build a timer that will fire after 0 seconds
-setTimeout(() => console.log("O sec timer"), 0); // NB position in tun: (5) / (4)
+setTimeout(() => console.log("O sec timer"), 0); // NB position in run: (5) / (4)
 // after 0 seconds, this callback will be put on the callback queue
 
 // let's build a promise that resolves immediately

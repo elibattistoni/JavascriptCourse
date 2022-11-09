@@ -53,13 +53,13 @@ DONE
 - coding challenge #1 DONE
 - coding challenge #2 DONE
 - coding challenge #3 DONE
-- coding challenge #4 DONE -- TODO to check
+- coding challenge #4 DONE
 
 ## 15_Mapty
 - exercises and challenges at the end of the video TODO
 
 ## 16_Asynchronous
-- coding challenge #1 TODO
+- coding challenge #1 DONE
 - coding challenge #2 TODO
 - coding challenge #3 TODO
 
