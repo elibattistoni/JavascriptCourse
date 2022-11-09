@@ -2,7 +2,6 @@
   "name": "06_npm_introduction",
   "version": "1.0.0",
   "description": "",
-  "main": "script.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
@@ -14,6 +13,6 @@
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel": "^2.8.0"
   }
 }

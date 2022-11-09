@@ -29,7 +29,7 @@ You only need to keep the package.json and then run `npm install` or `npm i` wit
 Parcel is a module bundler, fast and easy to use, and it works without any configuration (Webpack is another popula module bundler especially in the React world)
 
 IMPORTANT in the terminal write: `npm i parcel --save-dev`
-IMPORTANT parcel did not build, therefore I used `npm i parcel-bundler --save-dev`
+deprecated parcel did not build, therefore I used `npm i parcel-bundler --save-dev` IMPORTANT: UNINSTALLED AND DID THE STEPS (CFR VERY IMPORTANT ACTUAL STEPS)
 
 a dev dependency is a tool that we need to build our application, but it is not actually a dependency that we include in our code, it is simply a tool, and in the package.json file it appears in another field called devDependencies (the other libraries like leaflet are regular dependencies)
 
@@ -81,3 +81,19 @@ SO let's run `npm run build`
 To install packages globally: `npm install leaflet -g` using `-g`
 
 IMPORTANT in 07_steps.md there is a more concise version and usage of updated Parcel (version 2)
+
+# VERY IMPORTANT: ACTUAL STEPS
+no errors as of 13-11-2022
+STEPS
+check 
+1. `npm init`
+2. `npm i parcel --save-dev` and check this https://parceljs.org/getting-started/migration/
+3. in package,json remove "main":..., and add the following:
+    "scripts": {
+       "start": "parcel index.html",
+       "build": "parcel build index.html"
+     },
+4. `npm run start`
+5. `npm run build`
+
+CFR https://www.udemy.com/course/the-complete-javascript-course/learn/lecture/22649505#questions/17644824
