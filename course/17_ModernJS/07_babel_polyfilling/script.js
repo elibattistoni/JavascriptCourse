@@ -3,10 +3,10 @@
 
 console.log("Importing module");
 
-import add, { cart } from "./shoppingCart.js";
-add("pizza", 2);
-add("bread", 5);
-add("apples", 4);
+import { addToCart, cart } from "./shoppingCart.js";
+addToCart("pizza", 2);
+addToCart("bread", 5);
+addToCart("apples", 4);
 
 console.log(cart);
 

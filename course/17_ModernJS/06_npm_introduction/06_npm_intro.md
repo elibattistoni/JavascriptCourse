@@ -79,3 +79,5 @@ For that, we need another parcel command (added in the package.json as another s
 SO let's run `npm run build`
 
 To install packages globally: `npm install leaflet -g` using `-g`
+
+IMPORTANT in 07_steps.md there is a more concise version and usage of updated Parcel (version 2)

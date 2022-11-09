@@ -1,0 +1,17 @@
+{
+  "name": "07_babel_polyfilling",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Elisa",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.8.0"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  }
+}
