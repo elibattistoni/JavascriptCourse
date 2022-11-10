@@ -6,8 +6,6 @@ class ResultsView extends View {
   _errorMessage = "No recipes found for your query! Please try again.";
   _message = "";
 
-  addHanlderRender(handler) {}
-
   _generateMarkup() {
     return this._data.map(this._generateMarkupPreview).join("");
   }
