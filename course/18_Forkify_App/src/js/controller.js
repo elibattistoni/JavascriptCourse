@@ -18,6 +18,10 @@ const controlRecipes = async function () {
     if (!id) return;
     // render spinner
     recipeView.renderSpinner();
+
+    // update results view to mark selected search result
+    resultsView.update(model.getSearchResultsPage()); // TODO understand better the part of search results
+
     // load recipe
     await model.loadRecipe(id); // NB an async function will return a promise that we then need to handle whenever we call that async function
     // render recipe
@@ -70,10 +74,13 @@ const controlPagination = function (goToPage) {
 const controlServings = function (newServings) {
   // Update the recipe servings (in state)
   model.updateServings(newServings);
+  // Update the recipe view (overwrite the old one by rendering it again)
   // NB this function re-renders all the page (flickering in the image),
   // NB so we develop an algorithm that updates the DOM in places where we actually want to update the markup
-  // Update the recipe view (overwrite the old one by rendering it again)
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
+  // we will still need all the data, just like the render method, but the difference is that
+  // with update we will update only only text and attributes in the DOM instead of re-rendering the entire view
 };
 
 const init = function () {
