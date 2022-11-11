@@ -5,16 +5,37 @@ class PaginationView extends View {
   _parentElement = document.querySelector(".pagination");
 
   addHandlerClick(handler) {
-    // NB use event delegation because there are 2 buttons but we don't want to
-    // NB listen to each of them individually
-    // NB so we will add the event listener to the common parent element
-    // NB the .closest() method is a bit like querySelector but insted of
-    // NB searching down in the DOM tree (i.e. for children)
-    // NB it searches up in the tree (i.e. it looks for parents)
+    /*
+    | use event delegation because there are 2 buttons but we don't want to
+    | listen to each of them individually
+    | so we will add the event listener to the common parent element
+    | the .closest() method is a bit like querySelector but insted of
+    | searching down in the DOM tree (i.e. for children)
+    | it searches up in the tree (i.e. it looks for parents)
+
+    | Now we need a way of knowing which is the page we need to go when we click on the button
+    | We need a way for telling JS that it should display the results on page N
+    | We need to establish a connection between the DOM and the code
+    | We can do that with the custom data attribute
+    | So we will create a data attribute on each of the buttons, and 
+    | this data attribute will contain the page that we want to go to
+    | so in the code we can read that data and make the application go to that page
+    | in the code below we add the attribute 'data-goto'
+    | and in this function we can get that attribute
+    */
+
     this._parentElement.addEventListener("click", function (e) {
-      const btn = e.target.closest("btn--inline");
-      console.log(btn);
-      // TODO lecture 299 22:27
+      const btn = e.target.closest(".btn--inline");
+
+      if (!btn) return; // todo comment to see this work
+      // this prevents an error in the console, that you see if you click
+      // outside of a button but still in this parent element
+
+      const goToPage = +btn.dataset.goto;
+
+      //| now we have to pass this number to the controller and in the controller
+      //| we can use this number to render the results
+      handler(goToPage);
     });
   }
 
@@ -24,14 +45,14 @@ class PaginationView extends View {
     const numPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
-    console.log(numPages);
-    console.log(currentPage);
 
     // page 1 and other pages
     if (currentPage === 1 && numPages > 1) {
-      console.log("page 1, others");
+      //# manually added data-goto attribute to establish a connection between DOM and code
       return `
-        <button class="btn--inline pagination__btn--next">
+        <button data-goto="${
+          currentPage + 1
+        }" class="btn--inline pagination__btn--next">
           <span>Page ${currentPage + 1}</span>
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-right"></use>
@@ -42,9 +63,11 @@ class PaginationView extends View {
 
     // last page
     if (currentPage === numPages && numPages > 1) {
-      console.log("last page");
+      //# manually added data-goto attribute to establish a connection between DOM and code
       return `
-        <button class="btn--inline pagination__btn--prev">
+        <button data-goto="${
+          currentPage - 1
+        }" class="btn--inline pagination__btn--prev">
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-left"></use>
           </svg>
@@ -55,15 +78,19 @@ class PaginationView extends View {
 
     // other pages
     if (currentPage < numPages) {
-      console.log("other pages");
+      //# manually added data-goto attribute to establish a connection between DOM and code
       return `
-        <button class="btn--inline pagination__btn--prev">
+        <button data-goto="${
+          currentPage - 1
+        }" class="btn--inline pagination__btn--prev">
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-left"></use>
           </svg>
           <span>Page ${currentPage - 1}</span>
         </button>
-        <button class="btn--inline pagination__btn--next">
+        <button data-goto="${
+          currentPage + 1
+        }" class="btn--inline pagination__btn--next">
           <span>Page ${currentPage + 1}</span>
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-right"></use>

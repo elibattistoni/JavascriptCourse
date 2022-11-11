@@ -47,9 +47,9 @@ const controlSearchResults = async function () {
 
     // 3) Render results
     // resultsView.render(model.state.search.results);
-    resultsView.render(model.getSearchResultsPage(6));
+    resultsView.render(model.getSearchResultsPage());
 
-    // 4) Render pagination buttons
+    // 4) Render initial pagination buttons
     paginationView.render(model.state.search);
   } catch (err) {
     console.error(`💥 💥 💥 ${err}`);
@@ -57,8 +57,14 @@ const controlSearchResults = async function () {
   }
 };
 
-const controlPagination = function () {
-  console.log("Pag controller");
+//TODO study well this functions and how this pagination works!
+const controlPagination = function (goToPage) {
+  // 3) Render NEW results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+  // this render will overwrite what wa there previously, because we used the clear method
+
+  // 4) Render NEW  pagination buttons
+  paginationView.render(model.state.search);
 };
 
 const init = function () {

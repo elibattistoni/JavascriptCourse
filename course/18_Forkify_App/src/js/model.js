@@ -50,6 +50,8 @@ export const loadSearchResults = async function (query) {
         image: rec.image_url,
       };
     });
+
+    state.search.page = 1; // TODO ADDED BY ELISA
   } catch (err) {
     console.error(`💥 💥 💥 ${err}`);
     throw err;
