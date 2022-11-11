@@ -3,12 +3,15 @@ import icons from "url:../../img/icons.svg";
 export default class View {
   _data;
 
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
     this._data = data;
     const markup = this._generateMarkup();
+
+    if (!render) return markup; // NB for the bookmarks: instead of rendering the markup string to the dom, we return it as a markup string
+
     this._clear();
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
