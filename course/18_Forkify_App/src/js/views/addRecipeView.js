@@ -30,8 +30,9 @@ class AddRecipeView extends View {
     this._overlay.classList.add("hidden");
     // location.reload(); // TODO find a method that if you click again on th add recipe button it will not display again the message
   }
+
   _openWindow() {
-    this._renderForm();
+    this._renderForm(); // TODO try to do this with: .render(data,false) and _generateMarkup() instead of _renderForm()
     this._window.classList.remove("hidden");
     this._overlay.classList.remove("hidden");
   }
