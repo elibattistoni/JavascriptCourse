@@ -86,6 +86,10 @@ export const updateServings = function (newServings) {
   state.recipe.servings = newServings;
 };
 
+const persistBookmarks = function () {
+  localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+};
+
 export const addBookmark = function (recipe) {
   // add bookmark
   state.bookmarks.push(recipe);
@@ -93,6 +97,8 @@ export const addBookmark = function (recipe) {
   // mark current recipe as bookmark
   // this will allow us to actually display this current recipe as bookmarked in the recipe view
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+
+  persistBookmarks();
 };
 
 export const deleteBookmark = function (id) {
@@ -102,4 +108,21 @@ export const deleteBookmark = function (id) {
 
   // mark current recipe as not bookmarked
   if (id === state.recipe.id) state.recipe.bookmarked = false;
+
+  persistBookmarks();
 };
+
+const init = function () {
+  const storage = localStorage.getItem("bookmarks");
+  if (storage) state.bookmarks = JSON.parse(storage);
+};
+
+init();
+
+// console.log(state.bookmarks);
+
+// NB add a quick function that we can use only during development, to clear all the bookmarks
+const clearBookmarks = function () {
+  localStorage.clear("bookmarks");
+};
+// clearBookmarks(); // to make it work, comment the init() function

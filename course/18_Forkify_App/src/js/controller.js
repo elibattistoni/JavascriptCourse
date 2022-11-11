@@ -22,7 +22,9 @@ const controlRecipes = async function () {
 
     // update results view to mark selected search result
     resultsView.update(model.getSearchResultsPage()); // TODO understand better the part of search results
+
     // update bookmarks panel so that it highlights the current recipe
+    // debugger;
     bookmarksView.update(model.state.bookmarks);
 
     // load recipe
@@ -86,6 +88,10 @@ const controlServings = function (newServings) {
   // with update we will update only only text and attributes in the DOM instead of re-rendering the entire view
 };
 
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 const controlAddBookmark = function () {
   // add or remove bookmark depending on whether the recipe has been bookmarked or not
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
@@ -101,10 +107,12 @@ const controlAddBookmark = function () {
 };
 
 const init = function () {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHanlderRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 };
+
 init();
