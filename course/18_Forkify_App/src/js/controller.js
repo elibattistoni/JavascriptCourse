@@ -17,7 +17,7 @@ import "regenerator-runtime/runtime";
 const controlRecipes = async function () {
   try {
     // get recipe id
-    let id = window.location.hash.slice(1);
+    const id = window.location.hash.slice(1);
     if (!id) return;
     // render spinner
     recipeView.renderSpinner();
@@ -33,6 +33,7 @@ const controlRecipes = async function () {
     await model.loadRecipe(id); // NB an async function will return a promise that we then need to handle whenever we call that async function
     // render recipe
     recipeView.render(model.state.recipe);
+
     //| alternatively, from recipeVIew.js you could export the whole class
     //| but then here you could create as many views as you want (and we don't want that) + better to keep it simple here
     // if you did that, here you could write:
@@ -115,17 +116,25 @@ const controlAddRecipe = async function (newRecipe) {
 
     // upload new recipe data
     await model.uploadRecipe(newRecipe);
-    console.log(model.state.recipe);
 
     // render recipe
     recipeView.render(model.state.recipe);
+    console.log(model.state.recipe);
 
     // success message
     addRecipeView.renderMessage();
 
+    // render bookmark view
+    bookmarksView.render(model.state.bookmarks); // to insert a new bookmake we use render, not update
+
+    // Change ID in URL
+    window.history.pushState(null, "", `#${model.state.recipe.id}`);
+    // window.history.back() // to go back to the last page
+
     // close form window
     setTimeout(function () {
-      addRecipeView.toggleWindow();
+      // addRecipeView.toggleWindow();
+      addRecipeView.closeWindow();
     }, MODAL_CLOSE_SEC * 1000);
   } catch (err) {
     console.error(`💥 💥 💥 ${err}`);

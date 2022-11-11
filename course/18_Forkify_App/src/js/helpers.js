@@ -15,6 +15,32 @@ And in order to use this timout function, we will have a race between the
 timeout promise and the fetch function for getting the data
 */
 
+export const AJAX = async function (url, uploadData = undefined) {
+  try {
+    const fetchPro = uploadData
+      ? fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(uploadData),
+        })
+      : fetch(url);
+    const response = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
+    const data = await response.json();
+    if (!response.ok)
+      throw new Error(
+        `Error in getting response: ${data.message} (${response.status})`
+      );
+    return data;
+  } catch (err) {
+    console.error(`💥 💥 💥 ${err}`);
+    throw err;
+  }
+};
+
+/// refactored getJSON and sendJSON with the funciton AJAX above
+/*
 export const getJSON = async function (url) {
   try {
     const fetchPro = fetch(url);
@@ -32,11 +58,9 @@ export const getJSON = async function (url) {
   }
 };
 
-/*
-IMPORTANT to make this function more robust by adding some timeout, i.e. setting a time after which
-/ we make the request fail.
-/ This is important in order to prevent that the fetch runs forever when you have really bad internet connection.
-*/
+/IMPORTANT to make this function more robust by adding some timeout, i.e. setting a time after which
+// we make the request fail.
+// This is important in order to prevent that the fetch runs forever when you have really bad internet connection.
 
 export const sendJSON = async function (url, uploadData) {
   try {
@@ -60,3 +84,5 @@ export const sendJSON = async function (url, uploadData) {
     // NB throw the error here because you want to handle it in loadRecipe in model.js
   }
 };
+
+*/
