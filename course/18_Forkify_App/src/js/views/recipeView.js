@@ -19,6 +19,22 @@ class RecipeView extends View {
     );
   }
 
+  addHandlerUpdateServings(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      // const btn = e.target.closest(".btn--tiny"); // better to use
+      // btn--update-servings to select these buttons, because
+      // btn--tiny is more about styling and btn--update-servings is more about functionality
+      const btn = e.target.closest(".btn--update-servings");
+      // again, like for the pagination, add a data attribute in the dom: data-update-to
+      if (!btn) return;
+
+      // const updateTo = +btn.dataset.updateTo; // better with destructuring but careful about whether you put +
+      const { updateTo } = btn.dataset;
+
+      if (+updateTo > 0) handler(+updateTo);
+    });
+  }
+
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -50,12 +66,16 @@ class RecipeView extends View {
         <span class="recipe__info-text">servings</span>
 
         <div class="recipe__info-buttons">
-          <button class="btn--tiny btn--increase-servings">
+          <button class="btn--tiny btn--update-servings" data-update-to="${
+            this._data.servings - 1
+          }">
             <svg>
               <use href="${icons}#icon-minus-circle"></use>
             </svg>
           </button>
-          <button class="btn--tiny btn--increase-servings">
+          <button class="btn--tiny btn--update-servings" data-update-to="${
+            this._data.servings + 1
+          }">
             <svg>
               <use href="${icons}#icon-plus-circle"></use>
             </svg>

@@ -67,8 +67,18 @@ const controlPagination = function (goToPage) {
   paginationView.render(model.state.search);
 };
 
+const controlServings = function (newServings) {
+  // Update the recipe servings (in state)
+  model.updateServings(newServings);
+  // NB this function re-renders all the page (flickering in the image),
+  // NB so we develop an algorithm that updates the DOM in places where we actually want to update the markup
+  // Update the recipe view (overwrite the old one by rendering it again)
+  recipeView.render(model.state.recipe);
+};
+
 const init = function () {
   recipeView.addHanlderRender(controlRecipes);
+  recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 };
