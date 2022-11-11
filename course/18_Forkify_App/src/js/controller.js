@@ -2,6 +2,7 @@ import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
+import bookmarksView from "./views/bookmarksView.js";
 import paginationView from "./views/paginationView.js";
 
 import "core-js/stable";
@@ -21,6 +22,8 @@ const controlRecipes = async function () {
 
     // update results view to mark selected search result
     resultsView.update(model.getSearchResultsPage()); // TODO understand better the part of search results
+    // update bookmarks panel so that it highlights the current recipe
+    bookmarksView.update(model.state.bookmarks);
 
     // load recipe
     await model.loadRecipe(id); // NB an async function will return a promise that we then need to handle whenever we call that async function
@@ -83,9 +86,24 @@ const controlServings = function (newServings) {
   // with update we will update only only text and attributes in the DOM instead of re-rendering the entire view
 };
 
+const controlAddBookmark = function () {
+  // add or remove bookmark depending on whether the recipe has been bookmarked or not
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id);
+
+  // update recipe vie
+  recipeView.update(model.state.recipe);
+  // console.log(model.state.recipe);
+
+  // render bookmarks
+  bookmarksView.render(model.state.bookmarks);
+  // whenever a bookmark is added, we want to render the bookmarks view with all the bookmarks (with the array of bookmarks)
+};
+
 const init = function () {
   recipeView.addHanlderRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 };
