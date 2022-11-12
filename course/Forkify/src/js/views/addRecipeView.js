@@ -71,39 +71,39 @@ class AddRecipeView extends View {
         type="text"
         required
         name="ingredient-1"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
       <label>Ingredient 2</label>
       <input
         value=""
         type="text"
         name="ingredient-2"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
       <label>Ingredient 3</label>
       <input
         value=""
         type="text"
         name="ingredient-3"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
       <label>Ingredient 4</label>
       <input
         type="text"
         name="ingredient-4"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
       <label>Ingredient 5</label>
       <input
         type="text"
         name="ingredient-5"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
       <label>Ingredient 6</label>
       <input
         type="text"
         name="ingredient-6"
-        placeholder="Format: 'Quantity,Unit,Description'"
+        placeholder="Quantity,Unit,Description"
       />
     </div>
 
