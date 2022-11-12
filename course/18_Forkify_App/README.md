@@ -21,3 +21,5 @@
 IMPORTANT
 Document your application with JS docs https://jsdoc.app/
 /** and then tab (prompt)
+
+# IMPROVEMENTS & CHALLENGES (see slides)
