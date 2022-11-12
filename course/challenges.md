@@ -32,6 +32,7 @@ JavascriptCourse/course-material-v2.1/all-coding-challenges.pdf TODO
 - coding challenge #3 DONE
 - coding challenge #4 DONE -- to check
 - string methods in practice (another challenge) TODO
+- challenges by email TODO
 
 ## 10_Functions
 - coding challenge #1 DONE
@@ -63,4 +64,8 @@ DONE
 - coding challenge #2 TODO
 - coding challenge #3 TODO
 
-Next is Section 17 Modern JavScript development
+## 18_Forkify
+- unserstand better, improve TODO
+
+## ALL
+TODO all projects again
