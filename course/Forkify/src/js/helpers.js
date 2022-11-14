@@ -18,7 +18,7 @@ export const AJAX = async function (url, uploadData = undefined) {
           },
           body: JSON.stringify(uploadData),
         })
-      : fetch(url);
+      : fetch(url); // GET
     const response = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
     const data = await response.json();
     if (!response.ok)
