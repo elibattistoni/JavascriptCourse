@@ -151,22 +151,31 @@ Reassign the 'authors' variable below so that it contains both — already exist
 and authors returned from the getBookAuthors() function. Use the spread syntax. */
 console.log("----- A) -----");
 let authors = ["George Orwell", "Aldous Huxley"];
+authors = [...authors, ...getBookAuthors()];
+console.log(authors);
 
 /* B) The console.log() method can take multiple arguments and log them to the console.
 First, log the 'authors' array as it is (as one argument).
 Second, log the elements of the 'authors' array, but this time use the spread syntax.
 Compare the outputs. */
 console.log("----- B) -----");
+console.log(authors, ...authors);
 
 /* C) The spread syntax can be used with other iterables, for example, strings.
 Create a new variable called 'firstNameArray', and spread the 'firstName' string
 so that each letter becomes an element of the 'firstNameArray' like ['J', 'o', 'h', 'n']. */
 console.log("----- C) -----");
 const firstName = "John";
+const firstNameArray = [...firstName];
+console.log(firstNameArray);
 
 /* D) Now it's time to spread some objects. Create a new variable called 'cyberiad',
 and assign an object to it. This object should have all the properties of the second book from the 'books' array,
 plus the missing 'filmAdaptation' property set to false. */
 console.log("----- D) -----");
+const cyberiad = { ...books.at(1), filmAdaptation: false }; // creates a shallow copy
+console.log(books.at(1));
+console.log(cyberiad);
+console.log(books.at(1));
 
 /* ⚠️ COMMENT OUT YOUR SOLUTIONS AFTER YOU FINISH SO THAT IT DOESN'T COLLIDE WITH NEXT EXERCISES 🠕 */
