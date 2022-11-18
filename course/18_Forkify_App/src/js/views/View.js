@@ -25,6 +25,18 @@ export default class View {
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
+  // function updateTodos([{todoId: {title, description, deadline, status}}]){
+  //   for...
+  //   if (todo is not in the dom (assuming i have some id-driven way to look for todos in body)) {
+  //     add todo to dom!
+  //   }
+
+  //   if (todo is in the dom but is not the same as what i have in args, e.g. if this deadline != that deadline) {
+  //     maybe i even store them in a class!
+  //     update this very todo!
+  //   }
+  // }
+
   update(data) {
     // we do the same two checks that there were in render
     // because once we update the data, then we want the view's data to become the new data

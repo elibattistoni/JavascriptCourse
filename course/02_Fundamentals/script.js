@@ -1,7 +1,7 @@
 "use strict";
 
 //=============================================================================
-//# activating Strinct Mode
+//# activating Strict Mode
 // it is a special mode that we can activate in js in order to write more secure code
 // in order to do that, at the beginning of the file you have to write
 // "use strict"

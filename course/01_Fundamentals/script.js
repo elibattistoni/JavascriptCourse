@@ -303,7 +303,7 @@ switch (day) {
 //# the switch statement (non strictly equality comparison)
 const something = { day: undefined };
 
-/// null and undefined are non strictly undefined: null == undefined  is true,
+/// null and undefined are non strictly undefined: null == undefined is true,
 /// null === undefined is false
 //  e.g. i am not sure what "something" will be, and i cannot place a while cycle here
 // this is only useful if your backender is an idiot

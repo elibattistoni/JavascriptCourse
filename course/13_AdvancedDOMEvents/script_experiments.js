@@ -14,7 +14,7 @@ document.head;
 document.body;
 
 const header = document.querySelector(".header");
-const allSections = document.querySelectorAll(".section"); // this returns a NodeList
+const allSections = document.querySelectorAll(".section"); /// this returns a NodeList
 console.log(allSections);
 
 document.getElementById("section--1");
