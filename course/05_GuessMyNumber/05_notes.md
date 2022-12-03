@@ -16,3 +16,5 @@ The WEB APIs are like libraries that browsers implement and that we can access f
 WEB APIs = libraries that are also written in JS and that are automatically available for us to use (all this happens behind the scens: we do not have to import or do anything).
 There is an official DOM specification that browser implement, which is the reason why DOM manipulation works the same in all browsers.
 There are many more web APIs, such as "Timers", "Fetch",...
+
+NB here https://github.com/elibattistoni/guess-my-number there is the clean and refactored version of this project by me.
