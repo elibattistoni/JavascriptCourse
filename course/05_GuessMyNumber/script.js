@@ -3,7 +3,7 @@
 // EXPLANATIONS
 
 //- to select an HTML class
-// document.querySelector("#class-element");
+// document.querySelector(".class-element");
 //- to select an HTML id
 // document.querySelector("#id-element");
 
