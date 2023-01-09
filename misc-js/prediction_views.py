@@ -2,20 +2,16 @@ from django.shortcuts import render
 from django.views.generic import View
 from rest_framework import status
 
-from btk.app.notifications import NotificationManager
-from btk.portal.engine_ai import connect_ws_run_inference
-from btk.portal.forms import JudgementPredictionForm
-from btk.authentication.mixins import LawyersAndAdminAuthMixin
+from ....notifications import NotificationManager
+from ... import connect_ws_run_inference
+from ... import JudgementPredictionForm
+from ....mixins import LawyersAndAdminAuthMixin
 
 
 class JudgementPredictionFormView(LawyersAndAdminAuthMixin, View):
     """
-    Class-Based View that shows the form Judgement Prediction
-    (Predizione Sentenza)
+    Class-Based View that shows the form
 
-    Args:
-        LawyersAndAdminAuthMixin
-        View
     """
 
     def get(self, request):
